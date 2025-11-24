@@ -4,600 +4,283 @@
 using namespace godot;
 
 void StatusEffect::_bind_methods() {
-	ClassDB::bind_method(
-		godot::D_METHOD("get_id"),
-		&StatusEffect::get_id
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_id", "value"),
-		&StatusEffect::set_id
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::STRING_NAME,
-			"StatusEffect ID"
-		),
-		"set_id",
-		"get_id"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_id"), &StatusEffect::get_id);
+	ClassDB::bind_method(godot::D_METHOD("set_id", "value"), &StatusEffect::set_id);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_max_health_multiplier"),
-		&StatusEffect::get_max_health_multiplier
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_max_health_multiplier", "value"),
-		&StatusEffect::set_max_health_multiplier
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Max Health Multiplier"
-		),
-		"set_max_health_multiplier",
-		"get_max_health_multiplier"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_max_health_multiplier"), &StatusEffect::get_max_health_multiplier);
+	ClassDB::bind_method(godot::D_METHOD("set_max_health_multiplier", "value"), &StatusEffect::set_max_health_multiplier);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_max_health_offset"),
-		&StatusEffect::get_max_health_offset
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_max_health_offset", "value"),
-		&StatusEffect::set_max_health_offset
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Max Health Offset"
-		),
-		"set_max_health_offset",
-		"get_max_health_offset"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_max_health_offset"), &StatusEffect::get_max_health_offset);
+	ClassDB::bind_method(godot::D_METHOD("set_max_health_offset", "value"), &StatusEffect::set_max_health_offset);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_max_speed_multiplier"),
-		&StatusEffect::get_max_speed_multiplier
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_max_speed_multiplier", "value"),
-		&StatusEffect::set_max_speed_multiplier
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Max Speed Multiplier"
-		),
-		"set_max_speed_multiplier",
-		"get_max_speed_multiplier"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_max_speed_multiplier"), &StatusEffect::get_max_speed_multiplier);
+	ClassDB::bind_method(godot::D_METHOD("set_max_speed_multiplier", "value"), &StatusEffect::set_max_speed_multiplier);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_max_speed_offset"),
-		&StatusEffect::get_max_speed_offset
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_max_speed_offset", "value"),
-		&StatusEffect::set_max_speed_offset
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Max Speed Offset"
-		),
-		"set_max_speed_offset",
-		"get_max_speed_offset"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_max_speed_offset"), &StatusEffect::get_max_speed_offset);
+	ClassDB::bind_method(godot::D_METHOD("set_max_speed_offset", "value"), &StatusEffect::set_max_speed_offset);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_velocity_multiplier"),
-		&StatusEffect::get_velocity_multiplier
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_velocity_multiplier", "value"),
-		&StatusEffect::set_velocity_multiplier
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Velocity Multiplier"
-		),
-		"set_velocity_multiplier",
-		"get_velocity_multiplier"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_velocity_multiplier"), &StatusEffect::get_velocity_multiplier);
+	ClassDB::bind_method(godot::D_METHOD("set_velocity_multiplier", "value"), &StatusEffect::set_velocity_multiplier);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_velocity_offset"),
-		&StatusEffect::get_velocity_offset
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_velocity_offset", "value"),
-		&StatusEffect::set_velocity_offset
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Velocity Offset"
-		),
-		"set_velocity_offset",
-		"get_velocity_offset"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_velocity_offset"), &StatusEffect::get_velocity_offset);
+	ClassDB::bind_method(godot::D_METHOD("set_velocity_offset", "value"), &StatusEffect::set_velocity_offset);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_acceleration_multiplier"),
-		&StatusEffect::get_acceleration_multiplier
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_acceleration_multiplier", "value"),
-		&StatusEffect::set_acceleration_multiplier
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Acceleration Multiplier"
-		),
-		"set_acceleration_multiplier",
-		"get_acceleration_multiplier"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_acceleration_multiplier"), &StatusEffect::get_acceleration_multiplier);
+	ClassDB::bind_method(godot::D_METHOD("set_acceleration_multiplier", "value"), &StatusEffect::set_acceleration_multiplier);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_acceleration_offset"),
-		&StatusEffect::get_acceleration_offset
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_acceleration_offset", "value"),
-		&StatusEffect::set_acceleration_offset
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Acceleration Offset"
-		),
-		"set_acceleration_offset",
-		"get_acceleration_offset"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_acceleration_offset"), &StatusEffect::get_acceleration_offset);
+	ClassDB::bind_method(godot::D_METHOD("set_acceleration_offset", "value"), &StatusEffect::set_acceleration_offset);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_damage_multiplier"),
-		&StatusEffect::get_damage_multiplier
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_damage_multiplier", "value"),
-		&StatusEffect::set_damage_multiplier
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Damage Multiplier"
-		),
-		"set_damage_multiplier",
-		"get_damage_multiplier"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_damage_multiplier"), &StatusEffect::get_damage_multiplier);
+	ClassDB::bind_method(godot::D_METHOD("set_damage_multiplier", "value"), &StatusEffect::set_damage_multiplier);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_damage_offset"),
-		&StatusEffect::get_damage_offset
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_damage_offset", "value"),
-		&StatusEffect::set_damage_offset
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Damage Offset"
-		),
-		"set_damage_offset",
-		"get_damage_offset"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_damage_offset"), &StatusEffect::get_damage_offset);
+	ClassDB::bind_method(godot::D_METHOD("set_damage_offset", "value"), &StatusEffect::set_damage_offset);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_defense_multiplier"),
-		&StatusEffect::get_defense_multiplier
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_defense_multiplier", "value"),
-		&StatusEffect::set_defense_multiplier
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Defense Multiplier"
-		),
-		"set_defense_multiplier",
-		"get_defense_multiplier"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_defense_multiplier"), &StatusEffect::get_defense_multiplier);
+	ClassDB::bind_method(godot::D_METHOD("set_defense_multiplier", "value"), &StatusEffect::set_defense_multiplier);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_defense_offset"),
-		&StatusEffect::get_defense_offset
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_defense_offset", "value"),
-		&StatusEffect::set_defense_offset
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Defense Offset"
-		),
-		"set_defense_offset",
-		"get_defense_offset"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_defense_offset"), &StatusEffect::get_defense_offset);
+	ClassDB::bind_method(godot::D_METHOD("set_defense_offset", "value"), &StatusEffect::set_defense_offset);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_ground_friction_multiplier"),
-		&StatusEffect::get_ground_friction_multiplier
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_ground_friction_multiplier", "value"),
-		&StatusEffect::set_ground_friction_multiplier
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Ground Friction Multiplier"
-		),
-		"set_ground_friction_multiplier",
-		"get_ground_friction_multiplier"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_ground_friction_multiplier"), &StatusEffect::get_ground_friction_multiplier);
+	ClassDB::bind_method(godot::D_METHOD("set_ground_friction_multiplier", "value"), &StatusEffect::set_ground_friction_multiplier);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_ground_friction_offset"),
-		&StatusEffect::get_ground_friction_offset
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_ground_friction_offset", "value"),
-		&StatusEffect::set_ground_friction_offset
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Ground Friction Offset"
-		),
-		"set_ground_friction_offset",
-		"get_ground_friction_offset"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_ground_friction_offset"), &StatusEffect::get_ground_friction_offset);
+	ClassDB::bind_method(godot::D_METHOD("set_ground_friction_offset", "value"), &StatusEffect::set_ground_friction_offset);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_air_friction_multiplier"),
-		&StatusEffect::get_air_friction_multiplier
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_air_friction_multiplier", "value"),
-		&StatusEffect::set_air_friction_multiplier
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Air Friction Multiplier"
-		),
-		"set_air_friction_multiplier",
-		"get_air_friction_multiplier"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_air_friction_multiplier"), &StatusEffect::get_air_friction_multiplier);
+	ClassDB::bind_method(godot::D_METHOD("set_air_friction_multiplier", "value"), &StatusEffect::set_air_friction_multiplier);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_air_friction_offset"),
-		&StatusEffect::get_air_friction_offset
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_air_friction_offset", "value"),
-		&StatusEffect::set_air_friction_offset
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Air Friction Offset"
-		),
-		"set_air_friction_offset",
-		"get_air_friction_offset"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_air_friction_offset"), &StatusEffect::get_air_friction_offset);
+	ClassDB::bind_method(godot::D_METHOD("set_air_friction_offset", "value"), &StatusEffect::set_air_friction_offset);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_damage_over_time"),
-		&StatusEffect::get_damage_over_time
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_damage_over_time", "value"),
-		&StatusEffect::set_damage_over_time
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Damage Over Time"
-		),
-		"set_damage_over_time",
-		"get_damage_over_time"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_health_change"), &StatusEffect::get_health_change);
+	ClassDB::bind_method(godot::D_METHOD("set_health_change", "value"), &StatusEffect::set_health_change);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_damage_interval"),
-		&StatusEffect::get_damage_interval
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_damage_interval", "value"),
-		&StatusEffect::set_damage_interval
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::INT,
-			"Damage Interval"
-		),
-		"set_damage_interval",
-		"get_damage_interval"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_health_change_interval"), &StatusEffect::get_health_change_interval);
+	ClassDB::bind_method(godot::D_METHOD("set_health_change_interval", "value"), &StatusEffect::set_health_change_interval);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_duration"),
-		&StatusEffect::get_duration
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_duration", "value"),
-		&StatusEffect::set_duration
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::FLOAT,
-			"Duration"
-		),
-		"set_duration",
-		"get_duration"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_duration"), &StatusEffect::get_duration);
+	ClassDB::bind_method(godot::D_METHOD("set_duration", "value"), &StatusEffect::set_duration);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_transition"),
-		&StatusEffect::get_transition
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_transition", "value"),
-		&StatusEffect::set_transition
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::BOOL,
-			"Transition"
-		),
-		"set_transition",
-		"get_transition"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_transition_effect"), &StatusEffect::get_transition_effect);
+	ClassDB::bind_method(godot::D_METHOD("set_transition_effect", "value"), &StatusEffect::set_transition_effect);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_transition_effect"),
-		&StatusEffect::get_transition_effect
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_transition_effect", "value"),
-		&StatusEffect::set_transition_effect
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::STRING_NAME,
-			"Transition Effect"
-		),
-		"set_transition_effect",
-		"get_transition_effect"
-	);
+	ClassDB::bind_method(godot::D_METHOD("get_transition_interval"), &StatusEffect::get_transition_interval);
+	ClassDB::bind_method(godot::D_METHOD("set_transition_interval", "value"), &StatusEffect::set_transition_interval);
 
-	ClassDB::bind_method(
-		godot::D_METHOD("get_transition_wait_time"),
-		&StatusEffect::get_transition_wait_time
-	);
-	ClassDB::bind_method(
-		godot::D_METHOD("set_transition_wait_time", "value"),
-		&StatusEffect::set_transition_wait_time
-	);
-	ClassDB::add_property(
-		"StatusEffect",
-		godot::PropertyInfo(
-			godot::Variant::INT,
-			"Transition Wait Time"
-		),
-		"set_transition_wait_time",
-		"get_transition_wait_time"
-	);
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::STRING, "id"), "set_id", "get_id");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "duration", PROPERTY_HINT_RANGE, "0.0, 60, 0.01"), "set_duration", "get_duration");
+
+	ADD_GROUP("Max Health", "");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "max_health_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_max_health_multiplier", "get_max_health_multiplier");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "max_health_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_max_health_offset", "get_max_health_offset");
+	
+	ADD_GROUP("Health Over Time", "");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "health_change", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_health_change", "get_health_change");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "health_change_interval", PROPERTY_HINT_RANGE, "0.0, 60, 0.01"), "set_health_change_interval", "get_health_change_interval");
+
+	ADD_GROUP("Mobility", "");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "max_speed_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_max_speed_multiplier", "get_max_speed_multiplier");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "max_speed_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_max_speed_offset", "get_max_speed_offset");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "velocity_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_velocity_multiplier", "get_velocity_multiplier");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "velocity_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_velocity_offset", "get_velocity_offset");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "acceleration_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_acceleration_multiplier", "get_acceleration_multiplier");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "acceleration_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_acceleration_offset", "get_acceleration_offset");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "ground_friction_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_ground_friction_multiplier", "get_ground_friction_multiplier");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "ground_friction_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_ground_friction_offset", "get_ground_friction_offset");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "air_friction_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_air_friction_multiplier", "get_air_friction_multiplier");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "air_friction_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_air_friction_offset", "get_air_friction_offset");
+
+	ADD_GROUP("Combat", "");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "damage_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_damage_multiplier", "get_damage_multiplier");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "damage_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_damage_offset", "get_damage_offset");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "defense_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_defense_multiplier", "get_defense_multiplier");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "defense_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_defense_offset", "get_defense_offset");
+	
+	ADD_GROUP("Transition to Effect", "");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::STRING, "transition_effect_id"), "set_transition_effect", "get_transition_effect");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "transition_interval", PROPERTY_HINT_RANGE, "0.0, 60, 0.01"), "set_transition_interval", "get_transition_interval");
 }
 
 StatusEffect::StatusEffect() {
-	ID = "";
-	MaxHealthMultiplier = 0.0;
-	MaxHealthOffset = 0.0;
-	MaxSpeedMultiplier = 0.0;
-	MaxSpeedOffset = 0.0;
-	VelocityMultiplier = 0.0;
-	VelocityOffset = 0.0;
-	AccelerationMultiplier = 0.0;
-	AccelerationOffset = 0.0;
-	DamageMultiplier = 0.0;
-	DamageOffset = 0.0;
-	DefenseMultiplier = 0.0;
-	DefenseOffset = 0.0;
-	GroundFrictionMultiplier = 0.0;
-	GroundFrictionOffset = 0.0;
-	AirFrictionMultiplier = 0.0;
-	AirFrictionOffset = 0.0;
-	DamageOverTime = 0.0;
-	DamageInterval = 0;
-	Duration = 0.0;
-	Transition = false;
+	Id = "";
+	MaxHealth.Multiplier = 0.0;
+	MaxHealth.Offset = 0.0;
+	MaxSpeed.Multiplier = 0.0;
+	MaxSpeed.Offset = 0.0;
+	Velocity.Multiplier = 0.0;
+	Velocity.Offset = 0.0;
+	Acceleration.Multiplier = 0.0;
+	Acceleration.Offset = 0.0;
+	Damage.Multiplier = 0.0;
+	Damage.Offset = 0.0;
+	Defense.Multiplier = 0.0;
+	Defense.Offset = 0.0;
+	Friction.Ground.Multiplier = 0.0;
+	Friction.Ground.Offset = 0.0;
+	Friction.Air.Multiplier = 0.0;
+	Friction.Air.Offset = 0.0;
+	HealthChange.Amount = 0.0;
+	HealthChange.Interval.Seconds = 0.0;
+	HealthChange.Interval.Ticks = 0;
+	Duration.Seconds = 0.0;
+	Duration.Ticks = 0;
 	TransitionEffect = "";
-	TransitionWaitTime = 0;
+	TransitionInterval.Seconds = 0.0;
+	TransitionInterval.Ticks = 0;
 }
 
 StatusEffect::~StatusEffect() {
 	// Add your cleanup here.
 }
 
-StringName StatusEffect::get_id() const {
-	return ID;
+String StatusEffect::get_id() const {
+	return Id;
 }
-void StatusEffect::set_id(StringName value) {
-	ID = value;
+void StatusEffect::set_id(String value) {
+	Id = value;
 }
 
 double StatusEffect::get_max_health_multiplier() const {
-	return MaxHealthMultiplier;
+	return MaxHealth.Multiplier;
 }
 void StatusEffect::set_max_health_multiplier(double value) {
-	MaxHealthMultiplier = value;
+	MaxHealth.Multiplier = value;
 }
 double StatusEffect::get_max_health_offset() const {
-	return MaxHealthOffset;
+	return MaxHealth.Offset;
 }
 void StatusEffect::set_max_health_offset(double value) {
-	MaxHealthOffset = value;
+	MaxHealth.Offset = value;
 }
 
 double StatusEffect::get_max_speed_multiplier() const {
-	return MaxSpeedMultiplier;
+	return MaxSpeed.Multiplier;
 }
 void StatusEffect::set_max_speed_multiplier(double value) {
-	MaxSpeedMultiplier = value;
+	MaxSpeed.Multiplier = value;
 }
 double StatusEffect::get_max_speed_offset() const {
-	return MaxSpeedOffset;
+	return MaxSpeed.Offset;
 }
 void StatusEffect::set_max_speed_offset(double value) {
-	MaxSpeedOffset = value;
+	MaxSpeed.Offset = value;
 }
 
 double StatusEffect::get_velocity_multiplier() const {
-	return VelocityMultiplier;
+	return Velocity.Multiplier;
 }
 void StatusEffect::set_velocity_multiplier(double value) {
-	VelocityMultiplier = value;
+	Velocity.Multiplier = value;
 }
 double StatusEffect::get_velocity_offset() const {
-	return VelocityOffset;
+	return Velocity.Offset;
 }
 void StatusEffect::set_velocity_offset(double value) {
-	VelocityOffset = value;
+	Velocity.Offset = value;
 }
 
 double StatusEffect::get_acceleration_multiplier() const {
-	return AccelerationMultiplier;
+	return Acceleration.Multiplier;
 }
 void StatusEffect::set_acceleration_multiplier(double value) {
-	AccelerationMultiplier = value;
+	Acceleration.Multiplier = value;
 }
 double StatusEffect::get_acceleration_offset() const {
-	return AccelerationOffset;
+	return Acceleration.Offset;
 }
 void StatusEffect::set_acceleration_offset(double value) {
-	AccelerationOffset = value;
+	Acceleration.Offset = value;
 }
 
 double StatusEffect::get_damage_multiplier() const {
-	return DamageMultiplier;
+	return Damage.Multiplier;
 }
 void StatusEffect::set_damage_multiplier(double value) {
-	DamageMultiplier = value;
+	Damage.Multiplier = value;
 }
 double StatusEffect::get_damage_offset() const {
-	return DamageOffset;
+	return Damage.Offset;
 }
 void StatusEffect::set_damage_offset(double value) {
-	DamageOffset = value;
+	Damage.Offset = value;
 }
 
 double StatusEffect::get_defense_multiplier() const {
-	return DefenseMultiplier;
+	return Defense.Multiplier;
 }
 void StatusEffect::set_defense_multiplier(double value) {
-	DefenseMultiplier = value;
+	Defense.Multiplier = value;
 }
 double StatusEffect::get_defense_offset() const {
-	return DefenseOffset;
+	return Defense.Offset;
 }
 void StatusEffect::set_defense_offset(double value) {
-	DefenseOffset = value;
+	Defense.Offset = value;
 }
 
 double StatusEffect::get_ground_friction_multiplier() const {
-	return GroundFrictionMultiplier;
+	return Friction.Ground.Multiplier;
 }
 void StatusEffect::set_ground_friction_multiplier(double value) {
-	GroundFrictionMultiplier = value;
+	Friction.Ground.Multiplier = value;
 }
 double StatusEffect::get_ground_friction_offset() const {
-	return GroundFrictionOffset;
+	return Friction.Ground.Offset;
 }
 void StatusEffect::set_ground_friction_offset(double value) {
-	GroundFrictionOffset = value;
+	Friction.Ground.Offset = value;
 }
 
 double StatusEffect::get_air_friction_multiplier() const {
-	return AirFrictionMultiplier;
+	return Friction.Air.Multiplier;
 }
 void StatusEffect::set_air_friction_multiplier(double value) {
-	AirFrictionMultiplier = value;
+	Friction.Air.Multiplier = value;
 }
 double StatusEffect::get_air_friction_offset() const {
-	return AirFrictionOffset;
+	return Friction.Air.Offset;
 }
 void StatusEffect::set_air_friction_offset(double value) {
-	AirFrictionOffset = value;
+	Friction.Air.Offset = value;
 }
 
-double StatusEffect::get_damage_over_time() const {
-	return DamageOverTime;
+double StatusEffect::get_health_change() const {
+	return HealthChange.Amount;
 }
-void StatusEffect::set_damage_over_time(double value) {
-	DamageOverTime = value;
+void StatusEffect::set_health_change(double value) {
+	HealthChange.Amount = value;
 }
 
-int StatusEffect::get_damage_interval() const {
-	return DamageInterval;
+double StatusEffect::get_health_change_interval() const {
+	return HealthChange.Interval.Seconds;
 }
-void StatusEffect::set_damage_interval(int value) {
-	DamageInterval = value;
+void StatusEffect::set_health_change_interval(double value) {
+	HealthChange.Interval.Seconds = value;
+	HealthChange.Interval.Ticks = (int)(round(value * Engine::get_singleton()->get_physics_ticks_per_second()));
 }
 
 double StatusEffect::get_duration() const {
-	return Duration;
+	return Duration.Seconds;
 }
 void StatusEffect::set_duration(double value) {
-	Duration = value;
+	Duration.Seconds = value;
+	Duration.Ticks = (int)(round(value * Engine::get_singleton()->get_physics_ticks_per_second()));
 }
 
-bool StatusEffect::get_transition() const {
-	return Transition;
-}
-void StatusEffect::set_transition(bool value) {
-	Transition = value;
-}
-
-StringName StatusEffect::get_transition_effect() const {
+String StatusEffect::get_transition_effect() const {
 	return TransitionEffect;
 }
-void StatusEffect::set_transition_effect(StringName value) {
+void StatusEffect::set_transition_effect(String value) {
 	TransitionEffect = value;
 }
 
-int StatusEffect::get_transition_wait_time() const {
-	return TransitionWaitTime;
+double StatusEffect::get_transition_interval() const {
+	return TransitionInterval.Seconds;
 }
-void StatusEffect::set_transition_wait_time(int value) {
-	TransitionWaitTime = value;
+void StatusEffect::set_transition_interval(double value) {
+	TransitionInterval.Seconds = value;
+	TransitionInterval.Ticks = (int)(round(value * Engine::get_singleton()->get_physics_ticks_per_second()));
 }

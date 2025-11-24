@@ -2,6 +2,7 @@
 
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/core/property_info.hpp>
+#include <godot_cpp/classes/engine.hpp>
 
 namespace godot {
 
@@ -9,29 +10,35 @@ namespace godot {
 		GDCLASS(StatusEffect, Node2D)
 
 	private:
-		StringName ID;
-		double MaxHealthMultiplier;
-		double MaxHealthOffset;
-		double MaxSpeedMultiplier;
-		double MaxSpeedOffset;
-		double VelocityMultiplier;
-		double VelocityOffset;
-		double AccelerationMultiplier;
-		double AccelerationOffset;
-		double DamageMultiplier;
-		double DamageOffset;
-		double DefenseMultiplier;
-		double DefenseOffset;
-		double GroundFrictionMultiplier;
-		double GroundFrictionOffset;
-		double AirFrictionMultiplier;
-		double AirFrictionOffset;
-		double DamageOverTime;
-		int DamageInterval;
-		double Duration;
-		bool Transition;
-		StringName TransitionEffect;
-		int TransitionWaitTime;
+		struct StatInfo {
+			double Multiplier;
+			double Offset;
+		};
+		struct FrictionInfo {
+			StatInfo Ground;
+			StatInfo Air;
+		};
+		struct DurationInfo {
+			float Seconds;
+			int Ticks;
+		};
+		struct HealthChangeInfo {
+			float Amount;
+			DurationInfo Interval;
+		};
+
+		String Id;
+		DurationInfo Duration;
+		StatInfo MaxHealth;
+		StatInfo MaxSpeed;
+		StatInfo Velocity;
+		StatInfo Acceleration;
+		StatInfo Damage;
+		StatInfo Defense;
+		FrictionInfo Friction;
+		HealthChangeInfo HealthChange;
+		String TransitionEffect;
+		DurationInfo TransitionInterval;
 
 	protected:
 		static void _bind_methods();
@@ -40,8 +47,8 @@ namespace godot {
 		StatusEffect();
 		~StatusEffect();
 
-		StringName get_id() const;
-		void set_id(StringName value);
+		String get_id() const;
+		void set_id(String value);
 
 		double get_max_health_multiplier() const;
 		void set_max_health_multiplier(double value);
@@ -83,23 +90,20 @@ namespace godot {
 		double get_air_friction_offset() const;
 		void set_air_friction_offset(double value);
 
-		double get_damage_over_time() const;
-		void set_damage_over_time(double value);
+		double get_health_change() const;
+		void set_health_change(double value);
 
-		int get_damage_interval() const;
-		void set_damage_interval(int value);
+		double get_health_change_interval() const;
+		void set_health_change_interval(double value);
 
 		double get_duration() const;
 		void set_duration(double value);
 
-		bool get_transition() const;
-		void set_transition(bool value);
+		String get_transition_effect() const;
+		void set_transition_effect(String value);
 
-		StringName get_transition_effect() const;
-		void set_transition_effect(StringName value);
-
-		int get_transition_wait_time() const;
-		void set_transition_wait_time(int value);
+		double get_transition_interval() const;
+		void set_transition_interval(double value);
 	};
 
 }
