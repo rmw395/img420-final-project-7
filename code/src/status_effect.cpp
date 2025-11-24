@@ -4,6 +4,10 @@
 using namespace godot;
 
 void StatusEffect::_bind_methods() {
+
+	ClassDB::bind_method(godot::D_METHOD("_ready"), &StatusEffect::_ready);
+	ClassDB::bind_method(godot::D_METHOD("_exit_tree"), &StatusEffect::_exit_tree);
+
 	ClassDB::bind_method(godot::D_METHOD("get_id"), &StatusEffect::get_id);
 	ClassDB::bind_method(godot::D_METHOD("set_id", "value"), &StatusEffect::set_id);
 
@@ -134,6 +138,33 @@ StatusEffect::StatusEffect() {
 
 StatusEffect::~StatusEffect() {
 	// Add your cleanup here.
+}
+
+void StatusEffect::_notification(int p_what) {
+	switch (p_what) {
+		case NOTIFICATION_READY: {
+			_ready();
+			break;
+		}
+		case NOTIFICATION_EXIT_TREE: {
+			_exit_tree();
+			break;
+		}
+	}
+}
+
+void StatusEffect::_ready() {
+	Node* parent = get_parent();
+	// Will not work yet, need entity class
+	if (Object::cast_to<Entity>(parent) != nullptr) {
+		EntityParent = Object::cast_to<Entity>(parent)
+	}
+}
+
+void StatusEffect::_exit_tree() {
+	if (EntityParent != nullptr) {
+		
+	}
 }
 
 String StatusEffect::get_id() const {

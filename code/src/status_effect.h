@@ -39,13 +39,17 @@ namespace godot {
 		HealthChangeInfo HealthChange;
 		String TransitionEffect;
 		DurationInfo TransitionInterval;
+		Entity* EntityParent = nullptr;
 
 	protected:
+		void _notification(int p_what);
 		static void _bind_methods();
 
 	public:
 		StatusEffect();
 		~StatusEffect();
+		void _ready();
+		void _exit_tree();
 
 		String get_id() const;
 		void set_id(String value);
