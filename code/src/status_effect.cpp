@@ -1,12 +1,8 @@
 #include "status_effect.h"
-#include <godot_cpp/core/class_db.hpp>
 
 using namespace godot;
 
 void StatusEffect::_bind_methods() {
-
-	ClassDB::bind_method(godot::D_METHOD("_ready"), &StatusEffect::_ready);
-	ClassDB::bind_method(godot::D_METHOD("_exit_tree"), &StatusEffect::_exit_tree);
 
 	ClassDB::bind_method(godot::D_METHOD("get_id"), &StatusEffect::get_id);
 	ClassDB::bind_method(godot::D_METHOD("set_id", "value"), &StatusEffect::set_id);
@@ -77,11 +73,9 @@ void StatusEffect::_bind_methods() {
 	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::STRING, "id"), "set_id", "get_id");
 	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "duration", PROPERTY_HINT_RANGE, "0.0, 60, 0.01"), "set_duration", "get_duration");
 
-	ADD_GROUP("Max Health", "");
+	ADD_GROUP("Health", "");
 	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "max_health_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_max_health_multiplier", "get_max_health_multiplier");
 	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "max_health_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_max_health_offset", "get_max_health_offset");
-	
-	ADD_GROUP("Health Over Time", "");
 	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "health_change", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_health_change", "get_health_change");
 	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "health_change_interval", PROPERTY_HINT_RANGE, "0.0, 60, 0.01"), "set_health_change_interval", "get_health_change_interval");
 
@@ -100,8 +94,8 @@ void StatusEffect::_bind_methods() {
 	ADD_GROUP("Combat", "");
 	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "damage_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_damage_multiplier", "get_damage_multiplier");
 	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "damage_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_damage_offset", "get_damage_offset");
-	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "defense_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_defense_multiplier", "get_defense_multiplier");
-	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "defense_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_defense_offset", "get_defense_offset");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "percent_defense", PROPERTY_HINT_RANGE, "0, 1, 0.01"), "set_defense_multiplier", "get_defense_multiplier");
+	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "flat_defense", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_defense_offset", "get_defense_offset");
 	
 	ADD_GROUP("Transition to Effect", "");
 	ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::STRING, "transition_effect_id"), "set_transition_effect", "get_transition_effect");
@@ -131,40 +125,103 @@ StatusEffect::StatusEffect() {
 	HealthChange.Interval.Ticks = 0;
 	Duration.Seconds = 0.0;
 	Duration.Ticks = 0;
-	TransitionEffect = "";
-	TransitionInterval.Seconds = 0.0;
-	TransitionInterval.Ticks = 0;
+	Transition.Effect = "";
+	Transition.Interval.Seconds = 0.0;
+	Transition.Interval.Ticks = 0;
+	Transition.Interval.currentWaitTime = 0;
 }
 
 StatusEffect::~StatusEffect() {
 	// Add your cleanup here.
 }
 
-void StatusEffect::_notification(int p_what) {
-	switch (p_what) {
-		case NOTIFICATION_READY: {
-			_ready();
-			break;
-		}
-		case NOTIFICATION_EXIT_TREE: {
-			_exit_tree();
-			break;
-		}
-	}
-}
-
 void StatusEffect::_ready() {
 	Node* parent = get_parent();
-	// Will not work yet, need entity class
-	if (Object::cast_to<Entity>(parent) != nullptr) {
-		EntityParent = Object::cast_to<Entity>(parent)
+	EntityParent = Object::cast_to<Entity>(parent);
+	if (EntityParent != nullptr) {
+		Manager = InteractionManager::get_singleton();
+		EntityParent->MaxHealth.Multiplier += MaxHealth.Multiplier;
+		EntityParent->MaxHealth.Offset += MaxHealth.Offset;
+		EntityParent->MaxSpeed.Multiplier += MaxSpeed.Multiplier;
+		EntityParent->MaxSpeed.Offset += MaxSpeed.Offset;
+		EntityParent->Velocity.Multiplier += Velocity.Multiplier;
+		EntityParent->Velocity.Offset += Velocity.Offset;
+		EntityParent->Acceleration.Multiplier += Acceleration.Multiplier;
+		EntityParent->Acceleration.Offset += Acceleration.Offset;
+		EntityParent->Damage.Multiplier += Damage.Multiplier;
+		EntityParent->Damage.Offset += Damage.Offset;
+		EntityParent->Defense.Multiplier += Defense.Multiplier;
+		EntityParent->Defense.Offset += Defense.Offset;
+		EntityParent->Friction.Ground.Multiplier += Friction.Ground.Multiplier;
+		EntityParent->Friction.Ground.Offset += Friction.Ground.Offset;
+		EntityParent->Friction.Air.Multiplier += Friction.Air.Multiplier;
+		EntityParent->Friction.Air.Offset += Friction.Air.Offset;
+
+		HealthChange.Interval.Ticks = (int)(round(HealthChange.Interval.Seconds * Engine::get_singleton()->get_physics_ticks_per_second()));
+		HealthChange.Interval.currentWaitTime = HealthChange.Interval.Ticks;
+		Transition.Interval.Ticks = (int)(round(Transition.Interval.Seconds * Engine::get_singleton()->get_physics_ticks_per_second()));
+		Transition.Interval.currentWaitTime = Transition.Interval.Ticks;
+		Duration.Ticks = (int)(round(Duration.Seconds * Engine::get_singleton()->get_physics_ticks_per_second()));
+		Duration.currentWaitTime = Duration.Ticks;
 	}
+	else {
+		queue_free();
+	}
+	return;
+}
+
+void StatusEffect::_physics_process(double delta) {
+	if (EntityParent != nullptr) {
+		attempt_health_change();
+		attempt_transition();
+	}
+	return;
+}
+
+void StatusEffect::attempt_health_change() {
+	HealthChange.Interval.currentWaitTime -= 1;
+	if (HealthChange.Interval.currentWaitTime <= 0) {
+		if (HealthChange.Amount > 0) {
+			EntityParent->emit_signal("Heal", HealthChange);
+		}
+		else if (HealthChange.Amount < 0) {
+			EntityParent->emit_signal("Damage", HealthChange);
+		}
+	}
+	return;
+}
+
+void StatusEffect::attempt_transition() {
+	if (Transition.Effect != "") {
+		Transition.Interval.currentWaitTime -= 1;
+		if (Transition.Interval.currentWaitTime <= 0) {
+			Manager->add_status_effect(EntityParent, Transition.Effect);
+			queue_free();
+		}
+	}
+	return;
 }
 
 void StatusEffect::_exit_tree() {
 	if (EntityParent != nullptr) {
-		
+		EntityParent->MaxHealth.Multiplier -= MaxHealth.Multiplier;
+		EntityParent->MaxHealth.Offset -= MaxHealth.Offset;
+		EntityParent->MaxSpeed.Multiplier -= MaxSpeed.Multiplier;
+		EntityParent->MaxSpeed.Offset -= MaxSpeed.Offset;
+		EntityParent->Velocity.Multiplier -= Velocity.Multiplier;
+		EntityParent->Velocity.Offset -= Velocity.Offset;
+		EntityParent->Acceleration.Multiplier -= Acceleration.Multiplier;
+		EntityParent->Acceleration.Offset -= Acceleration.Offset;
+		EntityParent->Damage.Multiplier -= Damage.Multiplier;
+		EntityParent->Damage.Offset -= Damage.Offset;
+		EntityParent->Defense.Multiplier -= Defense.Multiplier;
+		EntityParent->Defense.Offset -= Defense.Offset;
+		EntityParent->Friction.Ground.Multiplier -= Friction.Ground.Multiplier;
+		EntityParent->Friction.Ground.Offset -= Friction.Ground.Offset;
+		EntityParent->Friction.Air.Multiplier -= Friction.Air.Multiplier;
+		EntityParent->Friction.Air.Offset -= Friction.Air.Offset;
 	}
+	return;
 }
 
 String StatusEffect::get_id() const {
@@ -290,7 +347,6 @@ double StatusEffect::get_health_change_interval() const {
 }
 void StatusEffect::set_health_change_interval(double value) {
 	HealthChange.Interval.Seconds = value;
-	HealthChange.Interval.Ticks = (int)(round(value * Engine::get_singleton()->get_physics_ticks_per_second()));
 }
 
 double StatusEffect::get_duration() const {
@@ -298,20 +354,18 @@ double StatusEffect::get_duration() const {
 }
 void StatusEffect::set_duration(double value) {
 	Duration.Seconds = value;
-	Duration.Ticks = (int)(round(value * Engine::get_singleton()->get_physics_ticks_per_second()));
 }
 
 String StatusEffect::get_transition_effect() const {
-	return TransitionEffect;
+	return Transition.Effect;
 }
 void StatusEffect::set_transition_effect(String value) {
-	TransitionEffect = value;
+	Transition.Effect = value;
 }
 
 double StatusEffect::get_transition_interval() const {
-	return TransitionInterval.Seconds;
+	return Transition.Interval.Seconds;
 }
 void StatusEffect::set_transition_interval(double value) {
-	TransitionInterval.Seconds = value;
-	TransitionInterval.Ticks = (int)(round(value * Engine::get_singleton()->get_physics_ticks_per_second()));
+	Transition.Interval.Seconds = value;
 }

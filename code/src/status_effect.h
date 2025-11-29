@@ -3,6 +3,8 @@
 #include <godot_cpp/classes/node2d.hpp>
 #include <godot_cpp/core/property_info.hpp>
 #include <godot_cpp/classes/engine.hpp>
+#include <godot_cpp/core/class_db.hpp>
+#include "interaction_manager.h"
 
 namespace godot {
 
@@ -21,9 +23,14 @@ namespace godot {
 		struct DurationInfo {
 			float Seconds;
 			int Ticks;
+			int currentWaitTime;
 		};
 		struct HealthChangeInfo {
 			float Amount;
+			DurationInfo Interval;
+		};
+		struct TransistionInfo {
+			String Effect;
 			DurationInfo Interval;
 		};
 
@@ -37,19 +44,22 @@ namespace godot {
 		StatInfo Defense;
 		FrictionInfo Friction;
 		HealthChangeInfo HealthChange;
-		String TransitionEffect;
-		DurationInfo TransitionInterval;
+		TransistionInfo Transition;
 		Entity* EntityParent = nullptr;
+		InteractionManager* Manager;
 
 	protected:
-		void _notification(int p_what);
 		static void _bind_methods();
 
 	public:
 		StatusEffect();
 		~StatusEffect();
-		void _ready();
-		void _exit_tree();
+		void _ready() override;
+		void _exit_tree() override;
+		void _physics_process(double delta) override;
+
+		void attempt_health_change();
+		void attempt_transition();
 
 		String get_id() const;
 		void set_id(String value);
