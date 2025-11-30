@@ -1,6 +1,7 @@
 #include "register_types.h"
 
 #include "status_effect.h"
+#include "recipe.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -13,6 +14,7 @@ void initialize_library_module(ModuleInitializationLevel p_level) {
 		return;
 	}
 	GDREGISTER_RUNTIME_CLASS(StatusEffect);
+	GDREGISTER_RUNTIME_CLASS(Recipe);
 }
 
 void uninitialize_library_module(ModuleInitializationLevel p_level) {
