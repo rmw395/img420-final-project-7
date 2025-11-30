@@ -12,9 +12,9 @@ class Recipe : public Resource
     GDCLASS(Recipe, Resource)
 
 private:
-	TypedArray<StringName> input_effects;
+	TypedArray<String> input_effects;
 	TypedArray<bool> consumed_effects;
-	TypedArray<StringName> output_effects;
+	TypedArray<String> output_effects;
 	int priority = 0;
 
 protected:
@@ -23,16 +23,16 @@ protected:
 public:
 
 	// Input Effects
-    void set_input_effects(const TypedArray<StringName>& arr);
-    TypedArray<StringName> get_input_effects() const;
+    void set_input_effects(const TypedArray<String>& arr);
+    TypedArray<String> get_input_effects() const;
 
     // Consumed Effects
     void set_consumed_effects(const TypedArray<bool>& arr);
     TypedArray<bool> get_consumed_effects() const;
 
     // Output Effects
-    void set_output_effects(const TypedArray<StringName>& arr);
-    TypedArray<StringName> get_output_effects() const;
+    void set_output_effects(const TypedArray<String>& arr);
+    TypedArray<String> get_output_effects() const;
 
     // Priority
     void set_priority(int p);

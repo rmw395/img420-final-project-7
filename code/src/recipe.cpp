@@ -10,7 +10,7 @@ void Recipe::_bind_methods()
 
     ClassDB::add_property(
         Recipe::get_class_static(),
-        PropertyInfo(Variant::ARRAY, "input_effects", PROPERTY_HINT_ARRAY_TYPE, "StringName"),
+        PropertyInfo(Variant::ARRAY, "input_effects", PROPERTY_HINT_ARRAY_TYPE, "String"),
         "set_input_effects",
         "get_input_effects"
     );
@@ -32,7 +32,7 @@ void Recipe::_bind_methods()
 
     ClassDB::add_property(
         Recipe::get_class_static(),
-        PropertyInfo(Variant::ARRAY, "output_effects", PROPERTY_HINT_ARRAY_TYPE, "StringName"),
+        PropertyInfo(Variant::ARRAY, "output_effects", PROPERTY_HINT_ARRAY_TYPE, "String"),
         "set_output_effects",
         "get_output_effects"
     );
@@ -50,11 +50,11 @@ void Recipe::_bind_methods()
 }
 
 // input effects set and get
-void Recipe::set_input_effects(const TypedArray<StringName>& arr) {
+void Recipe::set_input_effects(const TypedArray<String>& arr) {
     input_effects = arr;
 }
 
-TypedArray<StringName> Recipe::get_input_effects() const {
+TypedArray<String> Recipe::get_input_effects() const {
     return input_effects;
 }
 
@@ -68,11 +68,11 @@ TypedArray<bool> Recipe::get_consumed_effects() const {
 }
 
 // output effects set and get
-void Recipe::set_output_effects(const TypedArray<StringName>& arr) {
+void Recipe::set_output_effects(const TypedArray<String>& arr) {
     output_effects = arr;
 }
 
-TypedArray<StringName> Recipe::get_output_effects() const {
+TypedArray<String> Recipe::get_output_effects() const {
     return output_effects;
 }
 
