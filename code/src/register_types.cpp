@@ -2,11 +2,13 @@
 #include "interaction_manager.h"
 #include "status_effect.h"
 #include "recipe.h"
+#include "entity.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
 #include <godot_cpp/classes/project_settings.hpp>
+#include <godot_cpp/core/class_db.hpp>
 
 using namespace godot;
 
@@ -33,6 +35,7 @@ void initialize_library_module(ModuleInitializationLevel p_level) {
 	s_interaction_manager_singleton = memnew(InteractionManager);
 	Engine::get_singleton()->register_singleton("InteractionManager", s_interaction_manager_singleton);
 	s_interaction_manager_singleton->_initialize();
+	ClassDB::register_class<Entity>();
 }
 
 void uninitialize_library_module(ModuleInitializationLevel p_level) {
