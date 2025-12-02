@@ -1,6 +1,7 @@
 #include "register_types.h"
 #include "interaction_manager.h"
 #include "status_effect.h"
+#include "recipe.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
@@ -31,6 +32,7 @@ void initialize_library_module(ModuleInitializationLevel p_level) {
 	s_interaction_manager_singleton = memnew(InteractionManager);
 	Engine::get_singleton()->register_singleton("InteractionManager", s_interaction_manager_singleton);
 	s_interaction_manager_singleton->_initialize();
+	GDREGISTER_RUNTIME_CLASS(Recipe);
 }
 
 void uninitialize_library_module(ModuleInitializationLevel p_level) {
