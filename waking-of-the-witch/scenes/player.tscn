@@ -1,0 +1,80 @@
+[gd_scene load_steps=7 format=3 uid="uid://dwcykkwe2b14t"]
+
+[ext_resource type="Script" uid="uid://5ux3dbatbvlt" path="res://scripts/CharacterController.cs" id="1_3vyb7"]
+[ext_resource type="Texture2D" uid="uid://18x5852swo2u" path="res://icon.svg" id="2_g2els"]
+[ext_resource type="Shader" uid="uid://dsa8ry3a0p8kt" path="res://scripts/hit_flash.gdshader" id="2_qhqgy"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dqkch"]
+shader = ExtResource("2_qhqgy")
+shader_parameter/opacity = 0.0
+shader_parameter/flash_color = Vector4(1, 1, 1, 1)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qhqgy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_g2els")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhqgy"]
+radius = 12.0
+height = 24.0
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_3vyb7")
+MaxHealth = 10
+Speed = 500.0
+DashSpeed = 1000.0
+Acceleration = 3000.0
+AirAccelerationMult = 0.5
+Friction = 2400.0
+AirFrictionMult = 0.5
+JumpSpeed = 400.0
+BurstJumpSpeed = 1000.0
+Gravity = 1200.0
+SlowFallMult = 0.7
+
+[node name="Camera2D" type="Camera2D" parent="."]
+process_callback = 0
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+
+[node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
+material = SubResource("ShaderMaterial_dqkch")
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_qhqgy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_qhqgy")
+
+[node name="InvulnerabilityTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="DashTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="DashCooldown" type="Timer" parent="."]
+one_shot = true
+
+[node name="JumpTimer" type="Timer" parent="."]
+wait_time = 0.2
+one_shot = true
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="FlashTimer" type="Timer" parent="."]
+wait_time = 0.3
+one_shot = true
+
+[node name="AttackCooldown" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="timeout" from="DashTimer" to="." method="OnDashTimeout"]
