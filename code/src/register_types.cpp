@@ -2,11 +2,13 @@
 #include "interaction_manager.h"
 #include "status_effect.h"
 #include "recipe.h"
+#include "entity.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
 #include <godot_cpp/classes/project_settings.hpp>
+#include <godot_cpp/core/class_db.hpp>
 
 using namespace godot;
 
@@ -29,10 +31,11 @@ void initialize_library_module(ModuleInitializationLevel p_level) {
 		Variant::STRING, "interaction_manager/status_effect_file_path", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT
 	));
 	GDREGISTER_RUNTIME_CLASS(StatusEffect);
+	GDREGISTER_RUNTIME_CLASS(Recipe);
+  GDREGISTER_RUNTIME_CLASS(Entity);
 	s_interaction_manager_singleton = memnew(InteractionManager);
 	Engine::get_singleton()->register_singleton("InteractionManager", s_interaction_manager_singleton);
 	s_interaction_manager_singleton->_initialize();
-	GDREGISTER_RUNTIME_CLASS(Recipe);
 }
 
 void uninitialize_library_module(ModuleInitializationLevel p_level) {
