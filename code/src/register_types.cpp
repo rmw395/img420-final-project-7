@@ -32,10 +32,10 @@ void initialize_library_module(ModuleInitializationLevel p_level) {
 	));
 	GDREGISTER_RUNTIME_CLASS(StatusEffect);
 	GDREGISTER_RUNTIME_CLASS(Recipe);
+  GDREGISTER_RUNTIME_CLASS(Entity);
 	s_interaction_manager_singleton = memnew(InteractionManager);
 	Engine::get_singleton()->register_singleton("InteractionManager", s_interaction_manager_singleton);
 	s_interaction_manager_singleton->_initialize();
-	ClassDB::register_class<Entity>();
 }
 
 void uninitialize_library_module(ModuleInitializationLevel p_level) {
