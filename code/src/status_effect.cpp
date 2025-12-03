@@ -71,36 +71,36 @@ void StatusEffect::_bind_methods() {
     ClassDB::bind_method(godot::D_METHOD("get_transition_interval"), &StatusEffect::get_transition_interval);
     ClassDB::bind_method(godot::D_METHOD("set_transition_interval", "value"), &StatusEffect::set_transition_interval);
 
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::STRING, "id"), "set_id", "get_id");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "duration", PROPERTY_HINT_RANGE, "0.0, 60, 0.01"), "set_duration", "get_duration");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::STRING, "id"), "set_id", "get_id");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "duration", PROPERTY_HINT_RANGE, "0.0, 60, 0.01"), "set_duration", "get_duration");
 
     ADD_GROUP("Health", "");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "max_health_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_max_health_multiplier", "get_max_health_multiplier");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "max_health_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_max_health_offset", "get_max_health_offset");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "health_change", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_health_change", "get_health_change");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "health_change_interval", PROPERTY_HINT_RANGE, "0.0, 60, 0.01"), "set_health_change_interval", "get_health_change_interval");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "max_health_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_max_health_multiplier", "get_max_health_multiplier");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "max_health_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_max_health_offset", "get_max_health_offset");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "health_change", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_health_change", "get_health_change");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "health_change_interval", PROPERTY_HINT_RANGE, "0.0, 60, 0.01"), "set_health_change_interval", "get_health_change_interval");
 
     ADD_GROUP("Mobility", "");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "max_speed_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_max_speed_multiplier", "get_max_speed_multiplier");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "max_speed_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_max_speed_offset", "get_max_speed_offset");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "velocity_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_velocity_multiplier", "get_velocity_multiplier");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "velocity_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_velocity_offset", "get_velocity_offset");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "acceleration_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_acceleration_multiplier", "get_acceleration_multiplier");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "acceleration_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_acceleration_offset", "get_acceleration_offset");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "ground_friction_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_ground_friction_multiplier", "get_ground_friction_multiplier");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "ground_friction_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_ground_friction_offset", "get_ground_friction_offset");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "air_friction_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_air_friction_multiplier", "get_air_friction_multiplier");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "air_friction_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_air_friction_offset", "get_air_friction_offset");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "max_speed_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_max_speed_multiplier", "get_max_speed_multiplier");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "max_speed_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_max_speed_offset", "get_max_speed_offset");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "velocity_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_velocity_multiplier", "get_velocity_multiplier");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "velocity_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_velocity_offset", "get_velocity_offset");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "acceleration_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_acceleration_multiplier", "get_acceleration_multiplier");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "acceleration_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_acceleration_offset", "get_acceleration_offset");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "ground_friction_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_ground_friction_multiplier", "get_ground_friction_multiplier");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "ground_friction_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_ground_friction_offset", "get_ground_friction_offset");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "air_friction_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_air_friction_multiplier", "get_air_friction_multiplier");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "air_friction_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_air_friction_offset", "get_air_friction_offset");
 
     ADD_GROUP("Combat", "");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "damage_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_damage_multiplier", "get_damage_multiplier");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "damage_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_damage_offset", "get_damage_offset");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "percent_defense", PROPERTY_HINT_RANGE, "0, 1, 0.01"), "set_defense_multiplier", "get_defense_multiplier");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "flat_defense", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_defense_offset", "get_defense_offset");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "damage_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_damage_multiplier", "get_damage_multiplier");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "damage_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_damage_offset", "get_damage_offset");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "percent_defense", PROPERTY_HINT_RANGE, "0, 1, 0.01"), "set_defense_multiplier", "get_defense_multiplier");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "flat_defense", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_defense_offset", "get_defense_offset");
 
     ADD_GROUP("Transition to Effect", "");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::STRING, "transition_effect_id"), "set_transition_effect", "get_transition_effect");
-    ClassDB::add_property("StatusEffect", godot::PropertyInfo(godot::Variant::FLOAT, "transition_interval", PROPERTY_HINT_RANGE, "0.0, 60, 0.01"), "set_transition_interval", "get_transition_interval");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::STRING, "transition_effect_id"), "set_transition_effect", "get_transition_effect");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "transition_interval", PROPERTY_HINT_RANGE, "0.0, 60, 0.01"), "set_transition_interval", "get_transition_interval");
 }
 
 StatusEffect::StatusEffect() {
@@ -159,6 +159,7 @@ void StatusEffect::_ready() {
         entity_parent->friction.ground.offset += friction.ground.offset;
         entity_parent->friction.air.multiplier += friction.air.multiplier;
         entity_parent->friction.air.offset += friction.air.offset;
+        entity_parent->update_values();
 
         health_change.interval.ticks = (int)(round(health_change.interval.seconds * Engine::get_singleton()->get_physics_ticks_per_second()));
         health_change.interval.current_wait_time = health_change.interval.ticks;
@@ -178,6 +179,10 @@ void StatusEffect::_physics_process(double delta) {
     if (entity_parent != nullptr) {
         attempt_health_change();
         attempt_transition();
+        duration.current_wait_time -= 1;
+        if (duration.current_wait_time <= 0 && duration.ticks > 0) {
+            queue_free();
+        }
     }
     return;
 }
@@ -227,6 +232,7 @@ void StatusEffect::_exit_tree() {
         entity_parent->friction.ground.offset -= friction.ground.offset;
         entity_parent->friction.air.multiplier -= friction.air.multiplier;
         entity_parent->friction.air.offset -= friction.air.offset;
+        entity_parent->update_values();
     }
     return;
 }

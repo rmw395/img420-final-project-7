@@ -6,7 +6,12 @@
 [node name="Test" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_eig8f")]
-script = null
+DashSpeed = 0.0
+AirAccelerationMult = 0.0
+JumpSpeed = 0.0
+BurstJumpSpeed = 0.0
+Gravity = 0.0
+SlowFallMult = 0.0
 
 [node name="StatusEffect" type="StatusEffect" parent="Player"]
 id = "damage"

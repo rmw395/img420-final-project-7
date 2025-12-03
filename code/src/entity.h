@@ -44,7 +44,7 @@ namespace godot {
         Entity();
         ~Entity();
 
-        void _ready() override;
+        void _enter_tree() override;
         void update_values();
         void move(Vector2 velocity);
         void _on_damage(double damage_amount, Vector2 knockback);

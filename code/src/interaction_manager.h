@@ -17,9 +17,10 @@ namespace godot {
 		GDCLASS(InteractionManager, Object)
 
 	private:
-		Dictionary RecipeIndex;
-		Dictionary StatusEffectDictionary;
+		Dictionary recipe_index;
+		Dictionary status_effect_dictionary;
 		static InteractionManager* singleton;
+		bool is_initialized = false;
 
 	protected:
 

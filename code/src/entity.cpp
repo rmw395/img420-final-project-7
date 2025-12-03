@@ -133,7 +133,7 @@ void Entity::_bind_methods() {
         PropertyInfo(Variant::FLOAT, "heal_amount")));
 }
 
-void Entity::_ready() {
+void Entity::_enter_tree() {
     connect("damage", Callable(this, "_on_damage"));
     connect("heal", Callable(this, "_on_heal"));
     update_values();
