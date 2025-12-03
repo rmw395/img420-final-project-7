@@ -8,6 +8,8 @@
 #include <godot_cpp/core/class_db.hpp>
 #include <godot_cpp/variant/dictionary.hpp>
 #include "status_effect.h"
+#include "recipe.h"
+#include "entity.h"
 
 namespace godot {
 
@@ -15,15 +17,17 @@ namespace godot {
 		GDCLASS(InteractionManager, Object)
 
 	private:
-		Dictionary RecipeIndex;
-		Dictionary StatusEffectDictionary;
-		static InteractionManager* singleton = nullptr;
+		Dictionary recipe_index;
+		Dictionary status_effect_dictionary;
+		static InteractionManager* singleton;
+		bool is_initialized = false;
 
 	protected:
 
 	public:
 		InteractionManager();
 		~InteractionManager();
+		static void _bind_methods();
 		static InteractionManager* get_singleton();
 		void load_recipes();
 		void load_status_effects();

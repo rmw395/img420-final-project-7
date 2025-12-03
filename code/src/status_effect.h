@@ -4,49 +4,55 @@
 #include <godot_cpp/core/property_info.hpp>
 #include <godot_cpp/classes/engine.hpp>
 #include <godot_cpp/core/class_db.hpp>
-#include "interaction_manager.h"
+#include "entity.h"
 
 namespace godot {
+
+	class InteractionManager;
 
 	class StatusEffect : public Node2D {
 		GDCLASS(StatusEffect, Node2D)
 
 	private:
 		struct StatInfo {
-			double Multiplier;
-			double Offset;
+			double multiplier;
+			double offset;
+		};
+		struct VelocityInfo {
+			double multiplier;
+			Vector2 offset;
 		};
 		struct FrictionInfo {
-			StatInfo Ground;
-			StatInfo Air;
+			StatInfo ground;
+			StatInfo air;
 		};
 		struct DurationInfo {
-			float Seconds;
-			int Ticks;
-			int currentWaitTime;
+			float seconds;
+			int ticks;
+			int current_wait_time;
 		};
 		struct HealthChangeInfo {
-			float Amount;
-			DurationInfo Interval;
+			float amount;
+			DurationInfo interval;
 		};
 		struct TransistionInfo {
-			String Effect;
-			DurationInfo Interval;
+			String effect;
+			DurationInfo interval;
 		};
 
-		String Id;
-		DurationInfo Duration;
-		StatInfo MaxHealth;
-		StatInfo MaxSpeed;
-		StatInfo Velocity;
-		StatInfo Acceleration;
-		StatInfo Damage;
-		StatInfo Defense;
-		FrictionInfo Friction;
-		HealthChangeInfo HealthChange;
-		TransistionInfo Transition;
-		Entity* EntityParent = nullptr;
-		InteractionManager* Manager;
+		String id;
+		DurationInfo duration;
+		StatInfo max_health;
+		StatInfo max_speed;
+		VelocityInfo velocity;
+		StatInfo acceleration;
+		StatInfo damage;
+		StatInfo defense;
+		FrictionInfo friction;
+		HealthChangeInfo health_change;
+		TransistionInfo transition;
+		Entity* entity_parent;
+		InteractionManager* interaction_manager;
 
 	protected:
 		static void _bind_methods();
@@ -54,9 +60,10 @@ namespace godot {
 	public:
 		StatusEffect();
 		~StatusEffect();
+
 		void _ready() override;
-		void _exit_tree() override;
 		void _physics_process(double delta) override;
+		void _exit_tree() override;
 
 		void attempt_health_change();
 		void attempt_transition();
@@ -76,8 +83,8 @@ namespace godot {
 
 		double get_velocity_multiplier() const;
 		void set_velocity_multiplier(double value);
-		double get_velocity_offset() const;
-		void set_velocity_offset(double value);
+		Vector2 get_velocity_offset() const;
+		void set_velocity_offset(Vector2 value);
 
 		double get_acceleration_multiplier() const;
 		void set_acceleration_multiplier(double value);
