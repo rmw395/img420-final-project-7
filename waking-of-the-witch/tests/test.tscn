@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=3 uid="uid://bpjs74aoctqvo"]
+
+[ext_resource type="PackedScene" uid="uid://dwcykkwe2b14t" path="res://scenes/player.tscn" id="1_eig8f"]
+[ext_resource type="Script" uid="uid://ct1bbki0rjd36" path="res://scripts/Health.cs" id="2_7517i"]
+
+[node name="Test" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_eig8f")]
+script = null
+
+[node name="StatusEffect" type="StatusEffect" parent="Player"]
+id = "damage"
+duration = 20.0
+health_change = -10.0
+health_change_interval = 1.0
+
+[node name="Health" type="Label" parent="."]
+offset_left = -20.0
+offset_top = -121.0
+offset_right = 20.0
+offset_bottom = -98.0
+script = ExtResource("2_7517i")

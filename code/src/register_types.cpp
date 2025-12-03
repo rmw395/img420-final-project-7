@@ -19,9 +19,6 @@ void initialize_library_module(ModuleInitializationLevel p_level) {
 		return;
 	}
 	ProjectSettings* ps = ProjectSettings::get_singleton();
-	ps->add_property_info(PropertyInfo(
-		Variant::NIL, "interaction_manager/", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_CATEGORY
-	));
 	ps->set_setting("interaction_manager/recipe_file_path", String("res://recipes"));
 	ps->add_property_info(PropertyInfo(
 		Variant::STRING, "interaction_manager/recipe_file_path", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT
@@ -32,7 +29,8 @@ void initialize_library_module(ModuleInitializationLevel p_level) {
 	));
 	GDREGISTER_RUNTIME_CLASS(StatusEffect);
 	GDREGISTER_RUNTIME_CLASS(Recipe);
-  GDREGISTER_RUNTIME_CLASS(Entity);
+	GDREGISTER_RUNTIME_CLASS(Entity);
+	GDREGISTER_RUNTIME_CLASS(InteractionManager);
 	s_interaction_manager_singleton = memnew(InteractionManager);
 	Engine::get_singleton()->register_singleton("InteractionManager", s_interaction_manager_singleton);
 	s_interaction_manager_singleton->_initialize();

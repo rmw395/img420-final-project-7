@@ -7,36 +7,36 @@
 namespace godot 
 {
 
-class Recipe : public Resource 
-{
-    GDCLASS(Recipe, Resource)
+    class Recipe : public Resource 
+    {
+        GDCLASS(Recipe, Resource)
 
-private:
-	TypedArray<String> input_effects;
-	TypedArray<bool> consumed_effects;
-	TypedArray<String> output_effects;
-	int priority = 0;
+    private:
+	    TypedArray<String> input_effects;
+	    TypedArray<bool> consumed_effects;
+	    TypedArray<String> output_effects;
+	    int priority = 0;
 
-protected:
-    static void _bind_methods();
+    protected:
+        static void _bind_methods();
 
-public:
+    public:
 
-	// Input Effects
-    void set_input_effects(const TypedArray<String>& arr);
-    TypedArray<String> get_input_effects() const;
+	    // Input Effects
+        void set_input_effects(const TypedArray<String>& arr);
+        TypedArray<String> get_input_effects() const;
 
-    // Consumed Effects
-    void set_consumed_effects(const TypedArray<bool>& arr);
-    TypedArray<bool> get_consumed_effects() const;
+        // Consumed Effects
+        void set_consumed_effects(const TypedArray<bool>& arr);
+        TypedArray<bool> get_consumed_effects() const;
 
-    // Output Effects
-    void set_output_effects(const TypedArray<String>& arr);
-    TypedArray<String> get_output_effects() const;
+        // Output Effects
+        void set_output_effects(const TypedArray<String>& arr);
+        TypedArray<String> get_output_effects() const;
 
-    // Priority
-    void set_priority(int p);
-    int get_priority() const;
-};
+        // Priority
+        void set_priority(int p);
+        int get_priority() const;
+    };
 
 }

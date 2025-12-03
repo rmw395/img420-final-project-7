@@ -1,6 +1,5 @@
 using Godot;
 using System;
-using System.Collections.Generic;
 
 public partial class CharacterController : CharacterBody2D
 {
@@ -8,23 +7,11 @@ public partial class CharacterController : CharacterBody2D
 	public delegate void SetRespawnEventHandler(Vector2 position);
 	[Signal]
 	public delegate void RespawnEventHandler();
-	[Signal]
-	public delegate void EquipWeaponEventHandler(PackedScene WeaponScene);
 	
-	[Export]
-	public int MaxHealth;
-	[Export]
-	public float Speed;
 	[Export]
 	public float DashSpeed;
 	[Export]
-	public float Acceleration;
-	[Export]
 	public float AirAccelerationMult;
-	[Export]
-	public float Friction;
-	[Export]
-	public float AirFrictionMult;
 	[Export]
 	public float JumpSpeed;
 	[Export]
@@ -35,7 +22,6 @@ public partial class CharacterController : CharacterBody2D
 	public float SlowFallMult;
 	
 	public double TimePassed;
-	public int Health;
 	public AnimatedSprite2D PlayerSprite;
 	
 	private Vector2 _bufferSpeed;
@@ -56,34 +42,71 @@ public partial class CharacterController : CharacterBody2D
 	
 	public override void _Ready() 
 	{
-		Health = MaxHealth;
-		_bufferSpeed = Vector2.Zero;
-		_slowFalling = false;
-		_dashing = false; 
-		PlayerSprite = GetNode<AnimatedSprite2D>("PlayerSprite");
-		_shaderMat = (ShaderMaterial)PlayerSprite.Material;
-		_shaderMat.SetShaderParameter("flash_color", new Vector4(1.0f, 0.3f, 0.2f, 1.0f));
-		_invulnerabilityTimer = GetNode<Timer>("InvulnerabilityTimer");
-		_dashTimer = GetNode<Timer>("DashTimer");
-		_dashCooldown = GetNode<Timer>("DashCooldown");
-		_jumpTimer = GetNode<Timer>("JumpTimer");
-		_coyoteTimer = GetNode<Timer>("CoyoteTimer");
-		_flashTimer = GetNode<Timer>("FlashTimer");
-		_attackTimer = GetNode<Timer>("AttackCooldown");
-		_respawnPoint = GlobalPosition;
+		try 
+		{
+			// CRITICAL FIX 1: Force C++ to calculate stats (final = base * mult) 
+			// before we try to read them. Fixes race condition.
+			Call("update_values");
+
+			// CRITICAL FIX 2: Safe casting. 
+			// Call returns Variant. We cast to double first (native type), then float.
+			float currentHealth = (float)Call("get_health").As<double>();
+			
+			if (currentHealth <= 0)
+			{
+				float maxHealth = (float)Call("get_max_health").As<double>();
+				Call("set_health", maxHealth);
+			}
+
+			_bufferSpeed = Vector2.Zero;
+			_slowFalling = false;
+			_dashing = false; 
+			
+			// Safety check for nodes
+			PlayerSprite = GetNodeOrNull<AnimatedSprite2D>("PlayerSprite");
+			if (PlayerSprite == null) 
+			{
+				GD.PrintErr("CharacterController: 'PlayerSprite' node not found!");
+				return;
+			}
+
+			_shaderMat = (ShaderMaterial)PlayerSprite.Material;
+			if (_shaderMat != null)
+				_shaderMat.SetShaderParameter("flash_color", new Vector4(1.0f, 0.3f, 0.2f, 1.0f));
+			
+			_invulnerabilityTimer = GetNode<Timer>("InvulnerabilityTimer");
+			_dashTimer = GetNode<Timer>("DashTimer");
+			_dashCooldown = GetNode<Timer>("DashCooldown");
+			_jumpTimer = GetNode<Timer>("JumpTimer");
+			_coyoteTimer = GetNode<Timer>("CoyoteTimer");
+			_flashTimer = GetNode<Timer>("FlashTimer");
+			_attackTimer = GetNode<Timer>("AttackCooldown");
+			_respawnPoint = GlobalPosition;
+			
+		}
+		catch (Exception e)
+		{
+			GD.PrintErr($"CRASH IN _READY: {e.Message}\n{e.StackTrace}");
+		}
 	}
 	
 	public override void _PhysicsProcess(double delta) 
 	{
+		if (PlayerSprite == null) return;
+
 		TimePassed += delta;
-		_shaderMat.SetShaderParameter("opacity", _flashTimer.TimeLeft / _flashTimer.WaitTime);
+		if (_shaderMat != null)
+			_shaderMat.SetShaderParameter("opacity", _flashTimer.TimeLeft / _flashTimer.WaitTime);
+		
 		UpdateVelocity(delta);
 		UpdateSprite();
+		
 		if (Input.IsActionJustPressed("attack") && _attackTimer.IsStopped())
 		{
 			Attack();
 		}
-		MoveAndSlide();
+		
+		Call("move", Velocity);
 	}
 	
 	private void UpdateVelocity(double delta) 
@@ -92,35 +115,18 @@ public partial class CharacterController : CharacterBody2D
 		{
 			_dashing = true;
 			int direction = 0;
-			if (Input.IsActionPressed("left")) 
-			{
-				direction -= 1;
-			}
-			if (Input.IsActionPressed("right")) 
-			{
-				direction += 1;
-			}
+			if (Input.IsActionPressed("left")) direction -= 1;
+			if (Input.IsActionPressed("right")) direction += 1;
+			
 			if (direction == 0)
 			{
-				if (PlayerSprite.FlipH)
-				{
-					direction = -1;
-				}
-				else
-				{
-					direction = 1;
-				}
+				direction = PlayerSprite.FlipH ? -1 : 1;
 			}
 			Vector2 newVelocity = new Vector2(DashSpeed * direction, 0);
 			Velocity = newVelocity;
 			_dashTimer.Start();
-			
-			// GpuParticles2D dashTrail = DashTrailScene.Instantiate<GpuParticles2D>();
-			// dashTrail.Emitting = true;
-			// dashTrail.Position = PlayerSprite.Offset;
-			// dashTrail.ZIndex = PlayerSprite.ZIndex - 1;
-			// AddChild(dashTrail);
 		}
+		
 		if (_dashing)
 		{
 			if (!IsOnFloor())
@@ -147,7 +153,7 @@ public partial class CharacterController : CharacterBody2D
 			Velocity = WalkingVelocity(delta);
 		}
 	}
-
+	
 	private Vector2 WalkingVelocity(double delta)
 	{
 		Vector2 newVelocity;
@@ -155,31 +161,32 @@ public partial class CharacterController : CharacterBody2D
 		newVelocity.Y = VerticalMovement(delta);
 		return newVelocity;
 	}
-
+	
 	private float HorizontalMovement(double delta)
 	{
 		float newVelocity = Velocity.X;
 		int direction = 0;
-		if (Input.IsActionPressed("left"))
-		{
-			direction -= 1;
-		}
-		if (Input.IsActionPressed("right"))
-		{
-			direction += 1;
-		}
-		float currentFriction = Friction * Math.Abs(newVelocity) / Speed;
-		float currentAcceleration = Acceleration;
-
-		if (Math.Abs(newVelocity) > Speed)
+		if (Input.IsActionPressed("left")) direction -= 1;
+		if (Input.IsActionPressed("right")) direction += 1;
+		
+		float groundFriction = (float)Call("get_ground_friction").As<double>();
+		float airFriction = (float)Call("get_air_friction").As<double>();
+		float acceleration = (float)Call("get_acceleration").As<double>();
+		float maxSpeed = (float)Call("get_max_speed").As<double>();
+		
+		float currentFriction = IsOnFloor() ? groundFriction : airFriction;
+		float currentAcceleration = acceleration;
+		
+		float effectiveFriction = currentFriction * Math.Abs(newVelocity) / maxSpeed;
+		
+		if (Math.Abs(newVelocity) > maxSpeed)
 		{
 			currentAcceleration = 0;
 		}
-
+		
 		if (!IsOnFloor())
 		{
 			currentAcceleration *= AirAccelerationMult;
-			currentFriction *= AirFrictionMult;
 			_wasOnFloor = false;
 		}
 		else
@@ -187,16 +194,18 @@ public partial class CharacterController : CharacterBody2D
 			_coyoteTimer.Start();
 			_wasOnFloor = true;
 		}
-		newVelocity = Mathf.Lerp(newVelocity, newVelocity + (direction * currentAcceleration - currentFriction * Math.Sign(Velocity.X)) * (float)delta, 0.55f);
+		
+		newVelocity = Mathf.Lerp(newVelocity, newVelocity + (direction * currentAcceleration - effectiveFriction * Math.Sign(Velocity.X)) * (float)delta, 0.55f);
+		
 		int currentMovingDirection = Math.Sign(newVelocity);
-		newVelocity = Mathf.Lerp(newVelocity, newVelocity - currentMovingDirection * currentFriction * (float)delta, 0.55f);
+		newVelocity = Mathf.Lerp(newVelocity, newVelocity - currentMovingDirection * effectiveFriction * (float)delta, 0.55f);
+		
 		int newMovingDirection = Math.Sign(newVelocity);
 		if (currentMovingDirection != newMovingDirection)
 		{
 			newVelocity = 0;
 		}
 		return newVelocity;
-
 	}
 	
 	private float VerticalMovement(double delta)
@@ -217,7 +226,8 @@ public partial class CharacterController : CharacterBody2D
 		}
 		if (_slowFalling)
 		{
-			currentGravity *= SlowFallMult;
+			if (!float.IsNaN(currentGravity))
+				currentGravity *= SlowFallMult;
 		}
 		if (_jumping)
 		{
@@ -251,61 +261,37 @@ public partial class CharacterController : CharacterBody2D
 	{
 		_dashing = false;
 		_dashCooldown.Start();
-		// if (_bufferSpeed != Vector2.Zero)
-		// {
-		// 	Vector2 newVelocity = Velocity;
-		// 	newVelocity += _bufferSpeed;
-		// 	Velocity = newVelocity;
-		// 	_bufferSpeed = Vector2.Zero;
-		// }
 	}
 	
 	private void UpdateSprite() 
 	{
-		// Vector2 newOffset;
-		// newOffset.X = 0;
-		// newOffset.Y = (float)(4 * Math.Sin(TimePassed * 2.5) - 4);
-		// PlayerSprite.Offset = newOffset;
+		if (PlayerSprite == null) return;
 		
-		// if (_dashing)
-		// {
-		// 	PlayerSprite.SetFrame(PlayerSprite.GetSpriteFrames().GetFrameCount(PlayerSprite.Animation) - 1);
-		// }
-		// else
-		// {
-		// 	PlayerSprite.Stop();
-		// 	int numFrames = PlayerSprite.GetSpriteFrames().GetFrameCount(PlayerSprite.Animation) - 1;
-		// 	int newFrame = (int)Math.Floor(numFrames * (Math.Abs(Velocity.X) / Speed));
-		// 	if (newFrame >= numFrames) 
-		// 	{
-		// 		newFrame = numFrames - 1;
-		// 	}
-		// 	PlayerSprite.SetFrame(newFrame);
-		// }
 		if (Velocity.X < 0) 
 		{
 			PlayerSprite.FlipH = true;
-			// PlayerSprite.Animation = "walk_left";
 		}
 		if (Velocity.X > 0) 
 		{
 			PlayerSprite.FlipH = false;
-			// PlayerSprite.Animation = "walk_right";
 		}
 	}
-
+	
 	private void Attack()
 	{
 		return;
 	}
 	
-	private void OnDamage(float damage, Vector2 knockback)
+	private void OnDamage(double damage, Vector2 knockback)
 	{
 		if (_invulnerabilityTimer.IsStopped())
 		{
-			Health -= (int)damage;
+			GD.Print("hello?");
 			_flashTimer.Start();
-			GD.Print(Health);
+			
+			double currentHealth = (double)Call("get_health");
+			GD.Print($"Health: {currentHealth}");
+			
 			_invulnerabilityTimer.Start();
 			if (_dashing)
 			{
@@ -328,7 +314,8 @@ public partial class CharacterController : CharacterBody2D
 	
 	private void CheckHealth()
 	{
-		if (Health <= 0)
+		float currentHealth = (float)Call("get_health").As<double>();
+		if (currentHealth <= 0)
 		{
 			//GetParent<World>().EmitSignal("Death");
 		}
@@ -342,13 +329,7 @@ public partial class CharacterController : CharacterBody2D
 	private void OnRespawn()
 	{
 		GlobalPosition = _respawnPoint;
-	}
-	
-	override public void _ExitTree()
-	{
-		if (Health == 0)
-		{
-			Health = MaxHealth;
-		}
+		float maxHealth = (float)Call("get_max_health").As<double>();
+		Call("set_health", maxHealth);
 	}
 }
