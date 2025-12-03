@@ -1,24 +1,50 @@
 #include "register_types.h"
-
+#include "interaction_manager.h"
 #include "status_effect.h"
+#include "recipe.h"
+#include "entity.h"
 
 #include <gdextension_interface.h>
 #include <godot_cpp/core/defs.hpp>
 #include <godot_cpp/godot.hpp>
+#include <godot_cpp/classes/project_settings.hpp>
+#include <godot_cpp/core/class_db.hpp>
 
 using namespace godot;
+
+static InteractionManager* s_interaction_manager_singleton = nullptr;
 
 void initialize_library_module(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
+	ProjectSettings* ps = ProjectSettings::get_singleton();
+	ps->add_property_info(PropertyInfo(
+		Variant::NIL, "interaction_manager/", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_CATEGORY
+	));
+	ps->set_setting("interaction_manager/recipe_file_path", String("res://recipes"));
+	ps->add_property_info(PropertyInfo(
+		Variant::STRING, "interaction_manager/recipe_file_path", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT
+	));
+	ps->set_setting("interaction_manager/status_effect_file_path", String("res://recipes"));
+	ps->add_property_info(PropertyInfo(
+		Variant::STRING, "interaction_manager/status_effect_file_path", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT
+	));
 	GDREGISTER_RUNTIME_CLASS(StatusEffect);
+	GDREGISTER_RUNTIME_CLASS(Recipe);
+  GDREGISTER_RUNTIME_CLASS(Entity);
+	s_interaction_manager_singleton = memnew(InteractionManager);
+	Engine::get_singleton()->register_singleton("InteractionManager", s_interaction_manager_singleton);
+	s_interaction_manager_singleton->_initialize();
 }
 
 void uninitialize_library_module(ModuleInitializationLevel p_level) {
 	if (p_level != MODULE_INITIALIZATION_LEVEL_SCENE) {
 		return;
 	}
+	Engine::get_singleton()->unregister_singleton("InteractionManager");
+	memdelete(s_interaction_manager_singleton);
+	s_interaction_manager_singleton = nullptr;
 }
 
 extern "C" {

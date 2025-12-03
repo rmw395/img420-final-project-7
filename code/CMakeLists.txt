@@ -45,7 +45,7 @@ file(GLOB_RECURSE HEADERS CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.h
 
 #Create the library
 #add_library(${PROJECT_NAME} SHARED ${SOURCES} ${HEADERS})
-add_library(${PROJECT_NAME} SHARED ${SOURCES}  "src/status_effect.cpp" "src/status_effect.h")
+add_library(${PROJECT_NAME} SHARED ${SOURCES}  "src/status_effect.cpp" "src/status_effect.h" "src/interaction_manager.cpp" "src/interaction_manager.h")
 
 #Link our library to godot-cpp
 target_link_libraries(${PROJECT_NAME} PRIVATE godot-cpp)
