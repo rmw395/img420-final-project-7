@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://bpjs74aoctqvo"]
 
 [ext_resource type="PackedScene" uid="uid://dwcykkwe2b14t" path="res://scenes/player.tscn" id="1_eig8f"]
-[ext_resource type="Script" uid="uid://ct1bbki0rjd36" path="res://scripts/Health.cs" id="2_7517i"]
+[ext_resource type="Script" uid="uid://cvbqx7hja6ar4" path="res://scripts/Health.cs" id="2_7517i"]
 
 [node name="Test" type="Node2D"]
 
