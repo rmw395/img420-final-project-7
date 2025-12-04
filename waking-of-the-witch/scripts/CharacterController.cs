@@ -286,17 +286,17 @@ public partial class CharacterController : CharacterBody2D
 		if (PlayerSprite == null) return;
 		
 		if (Velocity.Y != 0)
-        {
-            PlayerSprite.Play("jump");
-        }
+		{
+			PlayerSprite.Play("jump");
+		}
 		else if (Velocity.X != 0)
-        {
-            PlayerSprite.Play("run");
-        }
+		{
+			PlayerSprite.Play("run");
+		}
 		else
-        {
-            PlayerSprite.Play("idle");
-        }
+		{
+			PlayerSprite.Play("idle");
+		}
 		if (Velocity.X < 0) 
 		{
 			PlayerSprite.FlipH = true;
