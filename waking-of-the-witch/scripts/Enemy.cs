@@ -16,6 +16,8 @@ public partial class Enemy : CharacterBody2D
 	public bool IsDead => CurrentHealth <= 0;
 
 	// attack variables
+    [Export]
+    public PackedScene Spell;
     private Area2D attackArea;
     private double _attackCooldown = 0;
     public bool CanAttack;
@@ -86,7 +88,7 @@ public partial class Enemy : CharacterBody2D
     // when the detection area is entered, set player 
     private void OnDetectionAreaEntered(Node2D body)
     {
-        GD.Print("DETECTED: ", body);
+        GD.Print("DETECTION AREA DETECTED: ", body);
         if (body is CharacterController p && GodotObject.IsInstanceValid(p))
         {
             Player = p;
@@ -103,6 +105,7 @@ public partial class Enemy : CharacterBody2D
     // when attack area is entered,
     private void OnAttackAreaBodyEntered(Node2D body)
     {   
+        GD.Print("ATTACK AREA DETECTED: ", body);
         // if the body entering is a player
         if (body is CharacterController p && _attackCooldown <= 0)
         {
@@ -121,7 +124,7 @@ public partial class Enemy : CharacterBody2D
 		}
     }
 
-	public void TakeDamage(float amount)
+	public void OnDamage(float amount)
 	{
 		CurrentHealth -= amount;
         GD.Print($"Enemy took {amount}. HP = {CurrentHealth}");

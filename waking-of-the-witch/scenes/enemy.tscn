@@ -14,7 +14,7 @@
 [ext_resource type="Script" uid="uid://c2fvd2rbxcrv7" path="res://scripts/EnemyBehaviorTree/Actions/BTStandby.cs" id="11_w8i8w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
-radius = 12.0
+radius = 13.0384
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ra3w"]
 radius = 469.18
@@ -36,16 +36,18 @@ texture = ExtResource("1_7p1mj")
 shape = SubResource("CircleShape2D_md0e3")
 
 [node name="DetectionArea" type="Area2D" parent="."]
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("CircleShape2D_4ra3w")
 
 [node name="AttackArea" type="Area2D" parent="."]
+collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 shape = SubResource("CircleShape2D_5uy6h")
 
-[node name="HurtBox" type="Area2D" parent="."]
+[node name="HurtBox" type="Area2D" parent="." groups=["enemy"]]
 script = ExtResource("3_otmr2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
@@ -95,3 +97,6 @@ script = ExtResource("4_8qclf")
 
 [node name="Standby" type="Node" parent="BehaviorTree/StandbySequence"]
 script = ExtResource("11_w8i8w")
+
+[connection signal="do_damage_effects" from="." to="." method="OnDamage"]
+[connection signal="Damage" from="HurtBox" to="." method="OnDamage"]

@@ -299,7 +299,7 @@ public partial class CharacterController : CharacterBody2D
 	
 	private void Attack()
 	{
-		GD.Print("Attack!");
+		GD.Print("Player Attacks!");
 		if (SpellScenes.Count != 0) {
 			if (SpellScenes[_currentSpellSlot] != null) {
 				Vector2 mousePosition = GetGlobalMousePosition();

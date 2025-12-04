@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://cms7scj7vexx0"]
 
-[ext_resource type="Script" uid="uid://butuqpik25t8n" path="res://scripts/Spell.cs" id="1_cnkva"]
+[ext_resource type="Script" uid="uid://bgpeauhhw3xx7" path="res://scripts/Spell.cs" id="1_cnkva"]
 [ext_resource type="Texture2D" uid="uid://18x5852swo2u" path="res://icon.svg" id="2_onmms"]
-[ext_resource type="Script" uid="uid://d4mc2e3vk8ijw" path="res://scripts/HitBox.cs" id="3_8quji"]
+[ext_resource type="Script" uid="uid://bauy6uarijw7u" path="res://scripts/HitBox.cs" id="3_8quji"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_l5glv"]
 radius = 5.0
