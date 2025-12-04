@@ -15,6 +15,11 @@ run/main_scene="uid://cteom6ym18p1c"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
+[display]
+
+window/stretch/mode="canvas_items"
+window/stretch/scale_mode="integer"
+
 [dotnet]
 
 project/assembly_name="Waking of the Witch"
@@ -50,4 +55,8 @@ attack={
 [interaction_manager]
 
 recipe_file_path="res://recipes"
-status_effect_file_path="res://recipes"
+status_effect_file_path="res://status_effects"
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0
