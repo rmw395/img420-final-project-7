@@ -33,6 +33,7 @@ height = 24.0
 base_acceleration = 3000.0
 base_ground_friction = 1800.0
 base_air_friction = 900.0
+collision_layer = 0
 script = ExtResource("1_3vyb7")
 DashSpeed = 1000.0
 AirAccelerationMult = 0.5
@@ -87,7 +88,6 @@ one_shot = true
 [node name="AttackCooldown" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="damage" from="." to="." method="OnDamage"]
 [connection signal="do_damage_effects" from="." to="." method="OnDamageEffects"]
 [connection signal="Damage" from="HurtBox" to="HurtBox" method="OnDamage"]
 [connection signal="timeout" from="InvulnerabilityTimer" to="." method="OnInvunerabilityTimeout"]
