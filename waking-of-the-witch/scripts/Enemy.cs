@@ -24,7 +24,6 @@ public partial class Enemy : CharacterBody2D
     private Area2D detectionArea;
 
 	public float Speed;
-	public const float JumpVelocity = -400.0f;
 
 	public override void _Ready()
     {   

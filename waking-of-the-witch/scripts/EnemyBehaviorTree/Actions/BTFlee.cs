@@ -15,13 +15,8 @@ public partial class BTFlee : BTNode
         float dirX = Mathf.Sign(enemy.GlobalPosition.X - enemy.Player.GlobalPosition.X);
 
         Vector2 vel = enemy.Velocity;
-
-        // Set flee speed horizontally
         vel.X = dirX * enemy.Speed;
-
-        // DO NOT TOUCH vel.Y → gravity handles vertical motion
         enemy.Velocity = vel;
-        enemy.MoveAndSlide();
 
         return BTState.Running;
     }
