@@ -36,6 +36,7 @@ namespace godot {
         StatInfo defense = { 0.0, 1.0, 0.0, 0.0 };
         double min_received_damage = 0.0;
         FrictionInfo friction = { 800.0, 1.0, 0.0, 800.0, 200.0, 1.0, 0.0, 200.0 };
+        bool invulnerable;
 
     protected:
         static void _bind_methods();
@@ -47,11 +48,14 @@ namespace godot {
         void _enter_tree() override;
         void update_values();
         void move(Vector2 velocity);
-        void _on_damage(double damage_amount, Vector2 knockback);
+        void _on_damage(double damage_amount, Vector2 knockback, bool bypass);
         void _on_heal(double heal_amount);
 
         void set_health(double v);
         double get_health() const;
+
+        bool get_invulnerable() const;
+        void set_invulnerable(bool v);
 
         // setters & getters (final stats)
         double get_max_health() const;
