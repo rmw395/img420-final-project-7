@@ -31,7 +31,7 @@ shape = SubResource("CircleShape2D_l5glv")
 
 [node name="HitBox" type="Area2D" parent="."]
 script = ExtResource("3_8quji")
-EnemyGroup = "player"
+EnemyGroup = "enemy"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
 shape = SubResource("CircleShape2D_eoqba")
