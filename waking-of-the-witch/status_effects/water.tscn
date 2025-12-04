@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://belk8f1nwkhgt"]
+
+[node name="water" type="StatusEffect"]
+id = "water"
+duration = 10.0
+ground_friction_multiplier = 0.6

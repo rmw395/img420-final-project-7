@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using Godot.Collections;
 
 public partial class CharacterController : CharacterBody2D
 {
@@ -20,6 +21,8 @@ public partial class CharacterController : CharacterBody2D
 	public float Gravity;
 	[Export]
 	public float SlowFallMult;
+	[Export]
+	public Array<PackedScene> SpellScenes { get; set; }
 	
 	public double TimePassed;
 	public AnimatedSprite2D PlayerSprite;
@@ -39,6 +42,7 @@ public partial class CharacterController : CharacterBody2D
 	private Timer _flashTimer;
 	private Timer _attackTimer;
 	private Vector2 _respawnPoint;
+	private int _currentSpellSlot;
 	
 	public override void _Ready() 
 	{
@@ -104,6 +108,22 @@ public partial class CharacterController : CharacterBody2D
 		if (Input.IsActionJustPressed("attack") && _attackTimer.IsStopped())
 		{
 			Attack();
+		}
+		if (Input.IsActionJustPressed("switch_up") && SpellScenes.Count != 0)
+		{
+			_currentSpellSlot++;
+			if (_currentSpellSlot > SpellScenes.Count - 1) {
+				_currentSpellSlot -= SpellScenes.Count;
+			}
+			GD.Print(_currentSpellSlot);
+		}
+		if (Input.IsActionJustPressed("switch_down") && SpellScenes.Count != 0)
+		{
+			_currentSpellSlot--;
+			if (_currentSpellSlot < 0) {
+				_currentSpellSlot += SpellScenes.Count;
+			}
+			GD.Print(_currentSpellSlot);
 		}
 		
 		Call("move", Velocity);
@@ -279,20 +299,31 @@ public partial class CharacterController : CharacterBody2D
 	
 	private void Attack()
 	{
-		return;
+		GD.Print("Attack!");
+		if (SpellScenes.Count != 0) {
+			if (SpellScenes[_currentSpellSlot] != null) {
+				Vector2 mousePosition = GetGlobalMousePosition();
+				Vector2 mouseDirection = (mousePosition - GlobalPosition).Normalized();
+				Spell newSpell = SpellScenes[_currentSpellSlot].Instantiate<Spell>();
+				newSpell.GlobalPosition = GlobalPosition + mouseDirection * 20;
+				GetParent().AddChild(newSpell);
+				newSpell.ApplyCentralImpulse(mouseDirection * newSpell.FiringForce);
+				_attackTimer.Start();
+			}
+		}
 	}
 	
-	private void OnDamage(double damage, Vector2 knockback)
+	private void OnDamageEffects(bool bypass)
 	{
-		if (_invulnerabilityTimer.IsStopped())
+		_flashTimer.Start();
+		
+		double currentHealth = (double)Call("get_health");
+		GD.Print($"Health: {currentHealth}");
+		
+		if (!bypass)
 		{
-			GD.Print("hello?");
-			_flashTimer.Start();
-			
-			double currentHealth = (double)Call("get_health");
-			GD.Print($"Health: {currentHealth}");
-			
 			_invulnerabilityTimer.Start();
+			CallDeferred("set_invulnerable", true);
 			if (_dashing)
 			{
 				_dashing = false;
@@ -306,10 +337,12 @@ public partial class CharacterController : CharacterBody2D
 					_dashCooldown.Start(0.2);
 				}
 			}
-			GD.Print(knockback);
-			Velocity = knockback;
-			CheckHealth();
 		}
+		CheckHealth();
+	}
+	
+	private void OnInvunerabilityTimeout() {
+		Call("set_invulnerable", false);
 	}
 	
 	private void CheckHealth()

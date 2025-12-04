@@ -11,6 +11,9 @@ void Entity::_bind_methods() {
     ClassDB::bind_method(D_METHOD("set_health", "value"), &Entity::set_health);
     ClassDB::bind_method(D_METHOD("get_health"), &Entity::get_health);
 
+    ClassDB::bind_method(D_METHOD("set_invulnerable", "value"), &Entity::set_invulnerable);
+    ClassDB::bind_method(D_METHOD("get_invulnerable"), &Entity::get_invulnerable);
+
     // --- FINAL STATS ---
 
     ClassDB::bind_method(D_METHOD("get_max_health"), &Entity::get_max_health);
@@ -121,11 +124,15 @@ void Entity::_bind_methods() {
     ClassDB::bind_method(D_METHOD("move", "velocity"), &Entity::move);
 
     // signal
-    ClassDB::bind_method(D_METHOD("_on_damage", "damage_amount", "knockback"), &Entity::_on_damage);
+    ClassDB::bind_method(D_METHOD("_on_damage", "damage_amount", "knockback", "bypass"), &Entity::_on_damage);
 
     ADD_SIGNAL(MethodInfo("damage",
         PropertyInfo(Variant::FLOAT, "damage_amount"),
-        PropertyInfo(Variant::VECTOR2, "knockback")));
+        PropertyInfo(Variant::VECTOR2, "knockback"),
+        PropertyInfo(Variant::BOOL, "bypass")));
+
+    ADD_SIGNAL(MethodInfo("do_damage_effects",
+        PropertyInfo(Variant::BOOL, "bypass")));
 
     ClassDB::bind_method(D_METHOD("_on_heal", "heal_amount"), &Entity::_on_heal);
 
@@ -162,11 +169,15 @@ void Entity::move(Vector2 given_velocity) {
     set_velocity(orig);
 }
 
-void Entity::_on_damage(double dmg, Vector2 knockback) {
-    print_line("Damage Received!");
-    health -= dmg;
-    health = CLAMP(health, 0, max_health.final);
-    set_velocity((get_velocity() + knockback));
+void Entity::_on_damage(double dmg, Vector2 knockback, bool bypass) {
+    print_line("Damage Received!  (", dmg, ")");
+    if (!invulnerable || bypass) {
+        print_line("Damage Dealt!  (", dmg, ")");
+        health -= dmg;
+        health = CLAMP(health, 0, max_health.final);
+        set_velocity((get_velocity() + knockback));
+        emit_signal("do_damage_effects", bypass);
+    }
 }
 
 void Entity::_on_heal(double heal) {
@@ -177,6 +188,8 @@ void Entity::_on_heal(double heal) {
 
 void Entity::set_health(double v) { health = v; }
 double Entity::get_health() const { return health; }
+void Entity::set_invulnerable(bool v) { invulnerable = v; }
+bool Entity::get_invulnerable() const { return invulnerable; }
 
 // final stat getters
 double Entity::get_max_health() const { return max_health.final; }

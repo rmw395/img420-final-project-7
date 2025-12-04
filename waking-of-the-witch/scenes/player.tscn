@@ -1,8 +1,13 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwcykkwe2b14t"]
+[gd_scene load_steps=11 format=3 uid="uid://dwcykkwe2b14t"]
 
-[ext_resource type="Script" uid="uid://bxmnfjmg83w5l" path="res://scripts/CharacterController.cs" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://ncctgjb4p15u" path="res://scripts/CharacterController.cs" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://18x5852swo2u" path="res://icon.svg" id="2_g2els"]
-[ext_resource type="Shader" uid="uid://cb1t677hrp6j8" path="res://scripts/hit_flash.gdshader" id="2_qhqgy"]
+[ext_resource type="Shader" uid="uid://bhw4xospnikgf" path="res://scripts/hit_flash.gdshader" id="2_qhqgy"]
+[ext_resource type="PackedScene" uid="uid://cms7scj7vexx0" path="res://scenes/water_spell.tscn" id="2_tuyoq"]
+[ext_resource type="PackedScene" uid="uid://ccmms4clk8vl8" path="res://scenes/fire_spell.tscn" id="3_fjrip"]
+[ext_resource type="Script" uid="uid://cj2wdvsum4ujj" path="res://scripts/HurtBox.cs" id="4_dqkch"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tuyoq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dqkch"]
 shader = ExtResource("2_qhqgy")
@@ -28,6 +33,7 @@ height = 24.0
 base_acceleration = 3000.0
 base_ground_friction = 1800.0
 base_air_friction = 900.0
+collision_layer = 0
 script = ExtResource("1_3vyb7")
 DashSpeed = 1000.0
 AirAccelerationMult = 0.5
@@ -35,6 +41,13 @@ JumpSpeed = 400.0
 BurstJumpSpeed = 1000.0
 Gravity = 1200.0
 SlowFallMult = 0.7
+SpellScenes = Array[PackedScene]([ExtResource("2_tuyoq"), ExtResource("3_fjrip")])
+
+[node name="HurtBox" type="Area2D" parent="." groups=["player"]]
+script = ExtResource("4_dqkch")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_tuyoq")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 process_callback = 0
@@ -75,5 +88,7 @@ one_shot = true
 [node name="AttackCooldown" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="damage" from="." to="." method="OnDamage"]
+[connection signal="do_damage_effects" from="." to="." method="OnDamageEffects"]
+[connection signal="Damage" from="HurtBox" to="HurtBox" method="OnDamage"]
+[connection signal="timeout" from="InvulnerabilityTimer" to="." method="OnInvunerabilityTimeout"]
 [connection signal="timeout" from="DashTimer" to="." method="OnDashTimeout"]
