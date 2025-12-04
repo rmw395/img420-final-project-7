@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://c4xi8uan0s1nt"]
+[gd_scene load_steps=15 format=3 uid="uid://c4xi8uan0s1nt"]
 
 [ext_resource type="Texture2D" uid="uid://18x5852swo2u" path="res://icon.svg" id="1_7p1mj"]
 [ext_resource type="Script" uid="uid://ql841nkiwba3" path="res://scripts/Enemy.cs" id="1_md0e3"]
@@ -10,17 +10,19 @@
 [ext_resource type="Script" uid="uid://cy11a2fyg5qra" path="res://scripts/EnemyBehaviorTree/Conditions/BTCanAttack.cs" id="8_8qclf"]
 [ext_resource type="Script" uid="uid://cp4rxte5y2pmk" path="res://scripts/EnemyBehaviorTree/Actions/BTAttack.cs" id="8_j0cyh"]
 [ext_resource type="Script" uid="uid://cylbgpxwavk8w" path="res://scripts/EnemyBehaviorTree/Actions/BTChasePlayer.cs" id="9_g0wcc"]
+[ext_resource type="Script" uid="uid://c2fvd2rbxcrv7" path="res://scripts/EnemyBehaviorTree/Actions/BTStandby.cs" id="11_w8i8w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
 radius = 13.0384
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ra3w"]
-radius = 164.012
+radius = 469.18
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5uy6h"]
 radius = 113.004
 
 [node name="Enemy" type="Entity"]
+base_max_speed = 50.0
 script = ExtResource("1_md0e3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -78,3 +80,9 @@ script = ExtResource("4_8qclf")
 
 [node name="Chase" type="Node" parent="BehaviorTree/Combat/CombatOptions/ChaseSequence"]
 script = ExtResource("9_g0wcc")
+
+[node name="StandbySequence" type="Node" parent="BehaviorTree"]
+script = ExtResource("4_8qclf")
+
+[node name="Standby" type="Node" parent="BehaviorTree/StandbySequence"]
+script = ExtResource("11_w8i8w")

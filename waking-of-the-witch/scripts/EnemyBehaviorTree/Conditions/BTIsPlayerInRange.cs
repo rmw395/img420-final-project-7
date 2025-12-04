@@ -1,15 +1,13 @@
 using Godot;
-using System;
 
-public partial class BTIsPlayerInRange : Node
+public partial class BTIsPlayerInRange : BTNode
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
-	{
-	}
+    public override BTState Tick(Enemy enemy, double delta)
+    {
+		// when detection area is entered, player is assigned
+        if (enemy.Player == null || !GodotObject.IsInstanceValid(enemy.Player))
+            return BTState.Failure;
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
+        return BTState.Success;
+    }
 }

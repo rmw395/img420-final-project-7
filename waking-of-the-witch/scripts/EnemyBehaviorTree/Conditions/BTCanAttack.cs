@@ -1,15 +1,15 @@
 using Godot;
-using System;
 
-public partial class BTCanAttack : Node
+public partial class BTCanAttack : BTNode
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+    public override BTState Tick(Enemy enemy, double delta)
 	{
+		// double checks player is in range
+		if (enemy.Player == null || !GodotObject.IsInstanceValid(enemy.Player))
+			return BTState.Failure;
+
+		// checks attack cooldown
+		return enemy.CanAttack ? BTState.Success : BTState.Failure;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 }

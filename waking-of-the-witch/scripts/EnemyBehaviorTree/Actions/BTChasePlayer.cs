@@ -1,15 +1,27 @@
 using Godot;
-using System;
 
-public partial class BTChasePlayer : Node
+public partial class BTChasePlayer : BTNode
 {
-	// Called when the node enters the scene tree for the first time.
-	public override void _Ready()
+    public override BTState Tick(Enemy enemy, double delta)
 	{
+		// player is assigned when detected by detection area
+		if (enemy.Player == null || !GodotObject.IsInstanceValid(enemy.Player))
+        {
+			// if player is no longer detected, leave
+			GD.Print("Chasing is cancelled");
+            return BTState.Failure;
+        }
+
+		float dirX = Mathf.Sign(enemy.Player.GlobalPosition.X - enemy.GlobalPosition.X);
+
+		Vector2 vel = enemy.Velocity;
+		vel.X = dirX * enemy.Speed;
+		enemy.Velocity = vel;
+
+		GD.Print($"Enemy chases at speed: {enemy.Speed}, velX: {enemy.Velocity.X}");
+
+		return BTState.Success;
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
-	{
-	}
 }
+
