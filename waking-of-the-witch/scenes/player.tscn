@@ -1,8 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwcykkwe2b14t"]
+[gd_scene load_steps=10 format=3 uid="uid://dwcykkwe2b14t"]
 
-[ext_resource type="Script" uid="uid://5ux3dbatbvlt" path="res://scripts/CharacterController.cs" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://ncctgjb4p15u" path="res://scripts/CharacterController.cs" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://18x5852swo2u" path="res://icon.svg" id="2_g2els"]
-[ext_resource type="Shader" uid="uid://dsa8ry3a0p8kt" path="res://scripts/hit_flash.gdshader" id="2_qhqgy"]
+[ext_resource type="Shader" path="res://scripts/hit_flash.gdshader" id="2_qhqgy"]
+[ext_resource type="Script" uid="uid://cfl42iiqlj31e" path="res://scripts/Vignette.cs" id="4_qlg0r"]
+[ext_resource type="Shader" uid="uid://nfs2q4gx8vvl" path="res://scripts/vignette.gdshader" id="5_tuyoq"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dqkch"]
 shader = ExtResource("2_qhqgy")
@@ -23,6 +25,10 @@ animations = [{
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhqgy"]
 radius = 12.0
 height = 24.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fjrip"]
+shader = ExtResource("5_tuyoq")
+shader_parameter/centerPosition = Vector2(0.5, 0.5)
 
 [node name="Player" type="Entity"]
 base_acceleration = 3000.0
@@ -74,6 +80,18 @@ one_shot = true
 
 [node name="AttackCooldown" type="Timer" parent="."]
 one_shot = true
+
+[node name="Vignette" type="CanvasLayer" parent="."]
+script = ExtResource("4_qlg0r")
+
+[node name="ColorRect" type="ColorRect" parent="Vignette"]
+material = SubResource("ShaderMaterial_fjrip")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
 
 [connection signal="damage" from="." to="." method="OnDamage"]
 [connection signal="timeout" from="DashTimer" to="." method="OnDashTimeout"]
