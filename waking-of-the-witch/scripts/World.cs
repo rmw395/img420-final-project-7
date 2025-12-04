@@ -49,7 +49,7 @@ public partial class World : Node2D
 		_interactionManager = Engine.GetSingleton("InteractionManager");
 		if (_interactionManager != null && HasNode("Player"))
 		{
-			_interactionManager.Call("add_status_effect", GetNode("Player"), "fire");
+			//_interactionManager.Call("add_status_effect", GetNode("Player"), "fire");
 			GD.Print("Fire!");
 		}
 	}
@@ -68,7 +68,7 @@ public partial class World : Node2D
 			if (_interactionManager != null)
 			{
 				GD.Print("Gas!");
-				_interactionManager.Call("add_status_effect", GetNode("Player"), "gasoline");
+				//_interactionManager.Call("add_status_effect", GetNode("Player"), "gasoline");
 			}
 		}
 		

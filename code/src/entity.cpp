@@ -131,6 +131,9 @@ void Entity::_bind_methods() {
         PropertyInfo(Variant::VECTOR2, "knockback"),
         PropertyInfo(Variant::BOOL, "bypass")));
 
+    ADD_SIGNAL(MethodInfo("do_damage_effects",
+        PropertyInfo(Variant::BOOL, "bypass")));
+
     ClassDB::bind_method(D_METHOD("_on_heal", "heal_amount"), &Entity::_on_heal);
 
     ADD_SIGNAL(MethodInfo("heal",
@@ -167,11 +170,13 @@ void Entity::move(Vector2 given_velocity) {
 }
 
 void Entity::_on_damage(double dmg, Vector2 knockback, bool bypass) {
-    print_line("Damage Received!");
+    print_line("Damage Received!  (", dmg, ")");
     if (!invulnerable || bypass) {
+        print_line("Damage Dealt!  (", dmg, ")");
         health -= dmg;
         health = CLAMP(health, 0, max_health.final);
         set_velocity((get_velocity() + knockback));
+        emit_signal("do_damage_effects", bypass);
     }
 }
 
