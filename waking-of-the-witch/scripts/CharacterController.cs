@@ -69,6 +69,7 @@ public partial class CharacterController : CharacterBody2D
 				GD.PrintErr("CharacterController: 'PlayerSprite' node not found!");
 				return;
 			}
+			PlayerSprite.Play("idle");
 
 			_shaderMat = (ShaderMaterial)PlayerSprite.Material;
 			if (_shaderMat != null)
@@ -152,6 +153,7 @@ public partial class CharacterController : CharacterBody2D
 		{
 			Velocity = WalkingVelocity(delta);
 		}
+
 	}
 	
 	private Vector2 WalkingVelocity(double delta)
@@ -167,7 +169,8 @@ public partial class CharacterController : CharacterBody2D
 		float newVelocity = Velocity.X;
 		int direction = 0;
 		if (Input.IsActionPressed("left")) direction -= 1;
-		if (Input.IsActionPressed("right")) direction += 1;
+		else if (Input.IsActionPressed("right")) direction += 1;
+		else return 0;
 		
 		float groundFriction = (float)Call("get_ground_friction").As<double>();
 		float airFriction = (float)Call("get_air_friction").As<double>();
@@ -267,6 +270,18 @@ public partial class CharacterController : CharacterBody2D
 	{
 		if (PlayerSprite == null) return;
 		
+		if (Velocity.Y != 0)
+        {
+            PlayerSprite.Play("jump");
+        }
+		else if (Velocity.X != 0)
+        {
+            PlayerSprite.Play("run");
+        }
+		else
+        {
+            PlayerSprite.Play("idle");
+        }
 		if (Velocity.X < 0) 
 		{
 			PlayerSprite.FlipH = true;

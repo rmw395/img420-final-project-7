@@ -92,8 +92,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhqgy"]
-radius = 12.0
-height = 24.0
+radius = 9.0
+height = 18.0
 
 [node name="Player" type="Entity"]
 base_acceleration = 3000.0
@@ -114,7 +114,7 @@ position_smoothing_speed = 10.0
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_qlg0r")
-animation = &"run"
+animation = &"jump"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
