@@ -62,4 +62,4 @@ switch_down={
 [interaction_manager]
 
 recipe_file_path="res://recipes"
-status_effect_file_path="res://recipes"
+status_effect_file_path="res://status_effects"
