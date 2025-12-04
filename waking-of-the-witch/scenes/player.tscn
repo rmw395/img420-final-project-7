@@ -180,6 +180,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
+
 [connection signal="do_damage_effects" from="." to="." method="OnDamageEffects"]
 [connection signal="Damage" from="HurtBox" to="HurtBox" method="OnDamage"]
 [connection signal="timeout" from="InvulnerabilityTimer" to="." method="OnInvunerabilityTimeout"]
