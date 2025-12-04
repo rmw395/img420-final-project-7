@@ -1,8 +1,9 @@
-[gd_scene load_steps=15 format=3 uid="uid://c4xi8uan0s1nt"]
+[gd_scene load_steps=17 format=3 uid="uid://c4xi8uan0s1nt"]
 
 [ext_resource type="Texture2D" uid="uid://18x5852swo2u" path="res://icon.svg" id="1_7p1mj"]
 [ext_resource type="Script" uid="uid://ql841nkiwba3" path="res://scripts/Enemy.cs" id="1_md0e3"]
 [ext_resource type="Script" uid="uid://d1mx3v7so2wjy" path="res://scripts/EnemyBehaviorTree/Composites/BTSelector.cs" id="3_ipns3"]
+[ext_resource type="Script" uid="uid://cvbsjx14kxxgs" path="res://scripts/HurtBox.cs" id="3_otmr2"]
 [ext_resource type="Script" uid="uid://dxs0b5p4exlij" path="res://scripts/EnemyBehaviorTree/Composites/BTSequence.cs" id="4_8qclf"]
 [ext_resource type="Script" uid="uid://6dvxbjhs4t5w" path="res://scripts/EnemyBehaviorTree/Conditions/BTIsHealthCritical.cs" id="5_w8i8w"]
 [ext_resource type="Script" uid="uid://chmnhlb76pqs5" path="res://scripts/EnemyBehaviorTree/Actions/BTFlee.cs" id="6_otmr2"]
@@ -13,13 +14,15 @@
 [ext_resource type="Script" uid="uid://c2fvd2rbxcrv7" path="res://scripts/EnemyBehaviorTree/Actions/BTStandby.cs" id="11_w8i8w"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
-radius = 13.0384
+radius = 12.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ra3w"]
 radius = 469.18
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5uy6h"]
 radius = 113.004
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_w8i8w"]
 
 [node name="Enemy" type="Entity"]
 base_max_speed = 50.0
@@ -41,6 +44,12 @@ shape = SubResource("CircleShape2D_4ra3w")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 shape = SubResource("CircleShape2D_5uy6h")
+
+[node name="HurtBox" type="Area2D" parent="."]
+script = ExtResource("3_otmr2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_w8i8w")
 
 [node name="BehaviorTree" type="Node" parent="."]
 script = ExtResource("3_ipns3")
