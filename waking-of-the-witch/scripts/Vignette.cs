@@ -18,6 +18,5 @@ public partial class Vignette : CanvasLayer
 		Vector2 centerScreenPosition = _camera.GetScreenCenterPosition();
 		Vector2 playerScreenPosition = (playerPosition - centerScreenPosition + GetViewport().GetVisibleRect().Size / 2) / GetViewport().GetVisibleRect().Size;
 		_shaderMat.SetShaderParameter("centerPosition", playerScreenPosition);
-		GD.Print(playerScreenPosition);
 	}
 }

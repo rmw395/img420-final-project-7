@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://bf6prynur3y5y"]
+
+[node name="fire" type="StatusEffect"]
+id = "fire"
+duration = 10.0
+health_change = -3.0
+health_change_interval = 1.0
+bypass_invulnerability = true

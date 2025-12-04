@@ -36,7 +36,7 @@ namespace godot {
         StatInfo defense = { 0.0, 1.0, 0.0, 0.0 };
         double min_received_damage = 0.0;
         FrictionInfo friction = { 800.0, 1.0, 0.0, 800.0, 200.0, 1.0, 0.0, 200.0 };
-        bool invulnerable;
+        bool invulnerable = false;
 
     protected:
         static void _bind_methods();

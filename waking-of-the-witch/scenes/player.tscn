@@ -1,10 +1,16 @@
-[gd_scene load_steps=10 format=3 uid="uid://dwcykkwe2b14t"]
+[gd_scene load_steps=14 format=3 uid="uid://dwcykkwe2b14t"]
 
-[ext_resource type="Script" uid="uid://ncctgjb4p15u" path="res://scripts/CharacterController.cs" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://e2oya8l15l1i" path="res://scripts/CharacterController.cs" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://18x5852swo2u" path="res://icon.svg" id="2_g2els"]
-[ext_resource type="Shader" path="res://scripts/hit_flash.gdshader" id="2_qhqgy"]
-[ext_resource type="Script" uid="uid://cfl42iiqlj31e" path="res://scripts/Vignette.cs" id="4_qlg0r"]
-[ext_resource type="Shader" uid="uid://nfs2q4gx8vvl" path="res://scripts/vignette.gdshader" id="5_tuyoq"]
+[ext_resource type="Shader" uid="uid://vs0nl1335r0" path="res://scripts/hit_flash.gdshader" id="2_qhqgy"]
+[ext_resource type="PackedScene" uid="uid://bmmrjmdxmg1o4" path="res://scenes/water_spell.tscn" id="2_tuyoq"]
+[ext_resource type="PackedScene" uid="uid://opcrivr2hp2v" path="res://scenes/fire_spell.tscn" id="3_fjrip"]
+[ext_resource type="Script" uid="uid://bif76daxaxsgf" path="res://scripts/HurtBox.cs" id="4_dqkch"]
+[ext_resource type="Script" uid="uid://e4i54ut4vws" path="res://scripts/Vignette.cs" id="4_qlg0r"]
+[ext_resource type="Shader" uid="uid://dxgoc64qtobch" path="res://scripts/vignette.gdshader" id="5_tuyoq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_tuyoq"]
+radius = 7.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dqkch"]
 shader = ExtResource("2_qhqgy")
@@ -23,10 +29,10 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhqgy"]
-radius = 12.0
-height = 24.0
+radius = 8.0
+height = 16.0
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fjrip"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tuyoq"]
 shader = ExtResource("5_tuyoq")
 shader_parameter/centerPosition = Vector2(0.5, 0.5)
 
@@ -34,22 +40,32 @@ shader_parameter/centerPosition = Vector2(0.5, 0.5)
 base_acceleration = 3000.0
 base_ground_friction = 1800.0
 base_air_friction = 900.0
+collision_layer = 0
 script = ExtResource("1_3vyb7")
-DashSpeed = 1000.0
+DashSpeed = 600.0
 AirAccelerationMult = 0.5
-JumpSpeed = 400.0
-BurstJumpSpeed = 1000.0
+JumpSpeed = 200.0
+BurstJumpSpeed = 400.0
 Gravity = 1200.0
 SlowFallMult = 0.7
+SpellScenes = Array[PackedScene]([ExtResource("2_tuyoq"), ExtResource("3_fjrip")])
+
+[node name="HurtBox" type="Area2D" parent="." groups=["player"]]
+script = ExtResource("4_dqkch")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_tuyoq")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -32)
+zoom = Vector2(2, 2)
 process_callback = 0
 position_smoothing_enabled = true
-position_smoothing_speed = 10.0
+position_smoothing_speed = 20.0
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 material = SubResource("ShaderMaterial_dqkch")
-scale = Vector2(0.2, 0.2)
+scale = Vector2(0.125, 0.125)
 sprite_frames = SubResource("SpriteFrames_qhqgy")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -85,7 +101,7 @@ one_shot = true
 script = ExtResource("4_qlg0r")
 
 [node name="ColorRect" type="ColorRect" parent="Vignette"]
-material = SubResource("ShaderMaterial_fjrip")
+material = SubResource("ShaderMaterial_tuyoq")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -93,5 +109,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
-[connection signal="damage" from="." to="." method="OnDamage"]
+[connection signal="do_damage_effects" from="." to="." method="OnDamageEffects"]
+[connection signal="Damage" from="HurtBox" to="HurtBox" method="OnDamage"]
+[connection signal="timeout" from="InvulnerabilityTimer" to="." method="OnInvunerabilityTimeout"]
 [connection signal="timeout" from="DashTimer" to="." method="OnDashTimeout"]

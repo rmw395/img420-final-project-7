@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://bmmrjmdxmg1o4"]
+
+[ext_resource type="Script" uid="uid://l51d2g3sbf2n" path="res://scripts/Spell.cs" id="1_cnkva"]
+[ext_resource type="Texture2D" uid="uid://18x5852swo2u" path="res://icon.svg" id="2_onmms"]
+[ext_resource type="Script" uid="uid://bf2vks45s3xdl" path="res://scripts/HitBox.cs" id="3_8quji"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_l5glv"]
+radius = 5.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_eoqba"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_cnkva"]
+radius = 6.0
+
+[node name="WaterSpell" type="RigidBody2D"]
+collision_layer = 0
+gravity_scale = 0.6
+script = ExtResource("1_cnkva")
+AppliedStatusEffect = "water"
+FiringForce = 400.0
+DamageAmount = 10.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0, 0, 1, 1)
+scale = Vector2(0.06, 0.06)
+texture = ExtResource("2_onmms")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_l5glv")
+
+[node name="HitBox" type="Area2D" parent="."]
+script = ExtResource("3_8quji")
+EnemyGroup = "player"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("CircleShape2D_eoqba")
+
+[node name="WallCollision" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallCollision"]
+shape = SubResource("CircleShape2D_cnkva")
+
+[connection signal="Hit" from="HitBox" to="." method="OnHit"]
+[connection signal="body_entered" from="WallCollision" to="." method="OnCollision"]
