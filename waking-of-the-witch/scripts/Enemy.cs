@@ -124,11 +124,8 @@ public partial class Enemy : CharacterBody2D
 		}
     }
 
-	public void OnDamage(float amount)
+	public void DoDamageEffects(bool bypass)
 	{
-		CurrentHealth -= amount;
-        GD.Print($"Enemy took {amount}. HP = {CurrentHealth}");
-
         // if (CurrentHealth >= 20)
 		// {
 		// 	damageTaken.Play();

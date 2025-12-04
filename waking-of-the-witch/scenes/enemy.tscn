@@ -26,6 +26,7 @@ radius = 113.004
 
 [node name="Enemy" type="Entity"]
 base_max_speed = 50.0
+collision_layer = 0
 script = ExtResource("1_md0e3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
@@ -98,5 +99,4 @@ script = ExtResource("4_8qclf")
 [node name="Standby" type="Node" parent="BehaviorTree/StandbySequence"]
 script = ExtResource("11_w8i8w")
 
-[connection signal="do_damage_effects" from="." to="." method="OnDamage"]
-[connection signal="Damage" from="HurtBox" to="." method="OnDamage"]
+[connection signal="Damage" from="HurtBox" to="HurtBox" method="OnDamage"]
