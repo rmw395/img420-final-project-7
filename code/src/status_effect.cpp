@@ -8,6 +8,9 @@ void StatusEffect::_bind_methods() {
     ClassDB::bind_method(godot::D_METHOD("get_id"), &StatusEffect::get_id);
     ClassDB::bind_method(godot::D_METHOD("set_id", "value"), &StatusEffect::set_id);
 
+    ClassDB::bind_method(godot::D_METHOD("get_bypass_invulnerability"), &StatusEffect::get_bypass_invulnerability);
+    ClassDB::bind_method(godot::D_METHOD("set_bypass_invulnerability", "value"), &StatusEffect::set_bypass_invulnerability);
+
     ClassDB::bind_method(godot::D_METHOD("get_max_health_multiplier"), &StatusEffect::get_max_health_multiplier);
     ClassDB::bind_method(godot::D_METHOD("set_max_health_multiplier", "value"), &StatusEffect::set_max_health_multiplier);
 
@@ -79,12 +82,13 @@ void StatusEffect::_bind_methods() {
     ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "max_health_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_max_health_offset", "get_max_health_offset");
     ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "health_change", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_health_change", "get_health_change");
     ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "health_change_interval", PROPERTY_HINT_RANGE, "0.0, 60, 0.01"), "set_health_change_interval", "get_health_change_interval");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::BOOL, "bypass_invulnerability"), "set_bypass_invulnerability", "get_bypass_invulnerability");
 
     ADD_GROUP("Mobility", "");
     ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "max_speed_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_max_speed_multiplier", "get_max_speed_multiplier");
     ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "max_speed_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_max_speed_offset", "get_max_speed_offset");
     ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "velocity_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_velocity_multiplier", "get_velocity_multiplier");
-    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "velocity_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_velocity_offset", "get_velocity_offset");
+    ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::VECTOR2, "velocity_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_velocity_offset", "get_velocity_offset");
     ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "acceleration_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_acceleration_multiplier", "get_acceleration_multiplier");
     ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "acceleration_offset", PROPERTY_HINT_RANGE, "-10, 10, 0.01"), "set_acceleration_offset", "get_acceleration_offset");
     ClassDB::add_property(StatusEffect::get_class_static(), godot::PropertyInfo(godot::Variant::FLOAT, "ground_friction_multiplier", PROPERTY_HINT_RANGE, "-1, 10, 0.01"), "set_ground_friction_multiplier", "get_ground_friction_multiplier");
@@ -175,7 +179,6 @@ void StatusEffect::_ready() {
 }
 
 void StatusEffect::_physics_process(double delta) {
-    print_line("Process!");
     if (entity_parent != nullptr) {
         attempt_health_change();
         attempt_transition();
@@ -195,7 +198,7 @@ void StatusEffect::attempt_health_change() {
             print_line("Heal Sent!");
         }
         else if (health_change.amount < 0) {
-            entity_parent->emit_signal("damage", -health_change.amount, Vector2(0, 0));
+            entity_parent->emit_signal("damage", -health_change.amount, Vector2(0, 0), bypass_invulnerability);
             print_line("Damage Sent!");
         }
         health_change.interval.current_wait_time += health_change.interval.ticks;
@@ -242,6 +245,14 @@ String StatusEffect::get_id() const {
 }
 void StatusEffect::set_id(String value) {
     id = value;
+}
+
+bool StatusEffect::get_bypass_invulnerability() const {
+    return bypass_invulnerability;
+}
+
+void StatusEffect::set_bypass_invulnerability(bool value) {
+    bypass_invulnerability = value;
 }
 
 double StatusEffect::get_max_health_multiplier() const {

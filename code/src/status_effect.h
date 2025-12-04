@@ -42,6 +42,7 @@ namespace godot {
 
 		String id;
 		DurationInfo duration;
+		bool bypass_invulnerability;
 		StatInfo max_health;
 		StatInfo max_speed;
 		VelocityInfo velocity;
@@ -70,6 +71,9 @@ namespace godot {
 
 		String get_id() const;
 		void set_id(String value);
+
+		bool get_bypass_invulnerability() const;
+		void set_bypass_invulnerability(bool value);
 
 		double get_max_health_multiplier() const;
 		void set_max_health_multiplier(double value);
