@@ -16,7 +16,7 @@ InteractionManager::~InteractionManager() {
 }
 
 void InteractionManager::_bind_methods() {
-
+	ClassDB::bind_method(D_METHOD("add_status_effect", "entity", "effect_id", "duration"), &InteractionManager::add_status_effect, DEFVAL(0.0));
 }
 
 InteractionManager* InteractionManager::singleton = nullptr;
@@ -26,9 +26,9 @@ InteractionManager* InteractionManager::get_singleton() {
 }
 
 void InteractionManager::_initialize() {
+	is_initialized = true;
 	load_recipes();
 	load_status_effects();
-	is_initialized = true;
 }
 
 void InteractionManager::load_recipes() {
@@ -59,7 +59,8 @@ void InteractionManager::load_recipes() {
 							recipe_index[effect_id] = recipes;
 						}
 						else {
-							Array recipes = { loaded_recipe };
+							Array recipes;
+							recipes.append(loaded_recipe);
 							recipe_index[effect_id] = recipes;
 						}
 					}
@@ -74,7 +75,10 @@ void InteractionManager::load_recipes() {
 void InteractionManager::load_status_effects() {
 	ResourceLoader* rl = ResourceLoader::get_singleton();
 	ProjectSettings* ps = ProjectSettings::get_singleton();
-	String folder_path = ps->get_setting("interaction_manager/status_effect_file_path", "res://recipes");
+	String folder_path = ps->get_setting("interaction_manager/status_effect_file_path", "res://status_effects");
+	if (!folder_path.ends_with("/")) {
+		folder_path += "/";
+	}
 	Ref<DirAccess> dir = DirAccess::open(folder_path);
 	if (dir.is_null()) {
 		return;
@@ -95,6 +99,7 @@ void InteractionManager::load_status_effects() {
 							String id = status_effect->get_id();
 							if (id != "") {
 								status_effect_dictionary[id] = loaded_scene;
+								print_line("Found Status Effect: ", id);
 							}
 						}
 						memdelete(root_node);
@@ -108,24 +113,30 @@ void InteractionManager::load_status_effects() {
 }
 
 void InteractionManager::add_status_effect(Entity* entity, String effect_id, double duration) {
+	print_line("=== ADD STATUS EFFECT START: ", effect_id, " ===");
 	if (!is_initialized) {
 		_initialize();
 	}
+	if (!(Object::cast_to<Entity>(entity))) return;
+	print_line("starting!");
 	Dictionary entity_status_map;
 	int child_count = entity->get_child_count();
 
 	for (int k = 0; k < child_count; k++) {
 		Node* child = entity->get_child(k);
+		if (!child) continue;
 		StatusEffect* status_effect = Object::cast_to<StatusEffect>(child);
 
 		if (status_effect && !status_effect->is_queued_for_deletion()) {
-			entity_status_map[status_effect->get_id()] = status_effect;
+			entity_status_map[status_effect->get_id()] = Variant(status_effect);
 		}
 	}
 
+	print_line("went through children!");
+
 	if (entity_status_map.has(effect_id)) {
-		Variant v = entity_status_map[effect_id];
-		StatusEffect* status_effect = Object::cast_to<StatusEffect>(v);
+		Object* obj = entity_status_map[effect_id];
+		StatusEffect* status_effect = Object::cast_to<StatusEffect>(obj);
 
 		if (status_effect) {
 			double current_duration = status_effect->get_duration();
@@ -137,7 +148,7 @@ void InteractionManager::add_status_effect(Entity* entity, String effect_id, dou
 				if (status_effect_dictionary.has(effect_id)) {
 					Ref<PackedScene> default_effect_scene = status_effect_dictionary[effect_id];
 					if (default_effect_scene.is_valid()) {
-						Node* root_node = default_effect_scene->instantiate();
+						Node* root_node = default_effect_scene->instantiate(PackedScene::GEN_EDIT_STATE_DISABLED);
 						if (root_node) {
 							StatusEffect* default_effect = Object::cast_to<StatusEffect>(root_node);
 							if (default_effect) {
@@ -156,15 +167,14 @@ void InteractionManager::add_status_effect(Entity* entity, String effect_id, dou
 						setting_duration = 0.0;
 					}
 				}
-				else {
-					setting_duration = 0.0;
-				}
 			}
 			double new_duration = (current_duration < setting_duration) ? setting_duration : current_duration;
 			status_effect->set_duration(new_duration);
 		}
 		return;
 	}
+
+	print_line("checked for sameness!");
 
 	Array available_recipes_variant = recipe_index.get(effect_id, Array());
 	Array candidate_recipes;
@@ -196,14 +206,30 @@ void InteractionManager::add_status_effect(Entity* entity, String effect_id, dou
 				best_recipe = current;
 			}
 		}
+		bool add_original_effect = true;
 		for (int i = 0; i < best_recipe->get_input_effects().size(); i++) {
 			String consumed_id = best_recipe->get_input_effects()[i];
-			if (i < best_recipe->get_consumed_effects().size() && (bool)best_recipe->get_consumed_effects()[i] && consumed_id != effect_id) {
+			if (i < best_recipe->get_consumed_effects().size() && (bool)best_recipe->get_consumed_effects()[i]) {
 				if (entity_status_map.has(consumed_id)) {
-					Variant v = entity_status_map[consumed_id];
-					StatusEffect* effect_node = Object::cast_to<StatusEffect>(v);
+					Object* obj = entity_status_map[consumed_id];
+					StatusEffect* effect_node = Object::cast_to<StatusEffect>(obj);
 					if (effect_node) {
 						effect_node->queue_free();
+					}
+				}
+				if (consumed_id == effect_id) {
+					add_original_effect = false;
+				}
+				print_line("Consumed: ", consumed_id, " Current: ", effect_id);
+			}
+		}
+		if (add_original_effect) {
+			if (status_effect_dictionary.has(effect_id)) {
+				Ref<PackedScene> effect_scene = status_effect_dictionary[effect_id];
+				if (effect_scene.is_valid()) {
+					Node* new_effect_node = effect_scene->instantiate();
+					if (new_effect_node) {
+						entity->add_child(new_effect_node);
 					}
 				}
 			}
@@ -214,9 +240,9 @@ void InteractionManager::add_status_effect(Entity* entity, String effect_id, dou
 	}
 	else {
 		if (status_effect_dictionary.has(effect_id)) {
-			Ref<PackedScene> recipe_scene = status_effect_dictionary[effect_id];
-			if (recipe_scene.is_valid()) {
-				Node* new_effect_node = recipe_scene->instantiate();
+			Ref<PackedScene> effect_scene = status_effect_dictionary[effect_id];
+			if (effect_scene.is_valid()) {
+				Node* new_effect_node = effect_scene->instantiate();
 				if (new_effect_node) {
 					entity->add_child(new_effect_node);
 				}

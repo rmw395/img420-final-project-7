@@ -23,7 +23,7 @@ void initialize_library_module(ModuleInitializationLevel p_level) {
 	ps->add_property_info(PropertyInfo(
 		Variant::STRING, "interaction_manager/recipe_file_path", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT
 	));
-	ps->set_setting("interaction_manager/status_effect_file_path", String("res://recipes"));
+	ps->set_setting("interaction_manager/status_effect_file_path", String("res://status_effects"));
 	ps->add_property_info(PropertyInfo(
 		Variant::STRING, "interaction_manager/status_effect_file_path", PROPERTY_HINT_NONE, "", PROPERTY_USAGE_DEFAULT
 	));
