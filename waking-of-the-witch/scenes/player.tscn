@@ -1,8 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwcykkwe2b14t"]
+[gd_scene load_steps=7 format=3 uid="uid://br60n4nx8fpf1"]
 
-[ext_resource type="Script" uid="uid://5ux3dbatbvlt" path="res://scripts/CharacterController.cs" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://ncctgjb4p15u" path="res://scripts/CharacterController.cs" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://18x5852swo2u" path="res://icon.svg" id="2_g2els"]
-[ext_resource type="Shader" uid="uid://dsa8ry3a0p8kt" path="res://scripts/hit_flash.gdshader" id="2_qhqgy"]
+[ext_resource type="Shader" path="res://scripts/hit_flash.gdshader" id="2_qhqgy"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dqkch"]
 shader = ExtResource("2_qhqgy")
@@ -76,4 +76,5 @@ one_shot = true
 one_shot = true
 
 [connection signal="damage" from="." to="." method="OnDamage"]
+[connection signal="timeout" from="InvulnerabilityTimer" to="." method="OnInvunerabilityTimeout"]
 [connection signal="timeout" from="DashTimer" to="." method="OnDashTimeout"]

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dhpt7jhsr6yk2"]
+
+[node name="gasoline" type="StatusEffect"]
+id = "gasoline"
+duration = 10.0
+acceleration_multiplier = 0.5

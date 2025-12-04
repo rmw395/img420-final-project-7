@@ -1,0 +1,6 @@
+[gd_resource type="Recipe" format=3 uid="uid://cpia3y5b0u1hi"]
+
+[resource]
+input_effects = Array[String](["water", "fire"])
+consumed_effects = Array[bool]([false, true])
+priority = 1

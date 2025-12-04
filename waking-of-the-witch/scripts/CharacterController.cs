@@ -282,17 +282,21 @@ public partial class CharacterController : CharacterBody2D
 		return;
 	}
 	
-	private void OnDamage(double damage, Vector2 knockback)
+	private void OnDamage(double damage, Vector2 knockback, bool bypass)
 	{
-		if (_invulnerabilityTimer.IsStopped())
+		if (_invulnerabilityTimer.IsStopped() || bypass)
 		{
-			GD.Print("hello?");
 			_flashTimer.Start();
 			
 			double currentHealth = (double)Call("get_health");
 			GD.Print($"Health: {currentHealth}");
 			
-			_invulnerabilityTimer.Start();
+			if (!bypass)
+			{
+				_invulnerabilityTimer.Start();
+				Call("set_invulnerable", true);
+			}
+			
 			if (_dashing)
 			{
 				_dashing = false;
@@ -310,6 +314,10 @@ public partial class CharacterController : CharacterBody2D
 			Velocity = knockback;
 			CheckHealth();
 		}
+	}
+	
+	private void OnInvunerabilityTimeout() {
+		Call("set_invulnerable", false);
 	}
 	
 	private void CheckHealth()
