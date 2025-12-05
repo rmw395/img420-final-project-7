@@ -1,0 +1,42 @@
+[gd_scene load_steps=2 format=3 uid="uid://dbva1pm1roknj"]
+
+[ext_resource type="Script" uid="uid://i4y6hpkjlkrl" path="res://scripts/DeathScreen.cs" id="1_uyutr"]
+
+[node name="DeathScreen" type="CanvasLayer"]
+process_mode = 3
+script = ExtResource("1_uyutr")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 969.0
+offset_bottom = 549.0
+color = Color(0, 0, 0, 0.4)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+z_index = 1
+offset_left = 106.0
+offset_top = 78.0
+offset_right = 862.0
+offset_bottom = 306.0
+theme_override_font_sizes/normal_font_size = 50
+text = "Oh no!
+You were outsmarted by the enemy and perished in battle."
+horizontal_alignment = 1
+
+[node name="TryAgain" type="Button" parent="."]
+offset_left = 236.0
+offset_top = 340.0
+offset_right = 398.0
+offset_bottom = 402.0
+theme_override_font_sizes/font_size = 30
+text = "Try Again"
+
+[node name="Quit" type="Button" parent="."]
+offset_left = 563.0
+offset_top = 340.0
+offset_right = 725.0
+offset_bottom = 402.0
+theme_override_font_sizes/font_size = 30
+text = "Quit"
+
+[connection signal="pressed" from="TryAgain" to="." method="OnRestart"]
+[connection signal="pressed" from="Quit" to="." method="OnQuit"]

@@ -1,6 +1,7 @@
-[gd_scene load_steps=28 format=3 uid="uid://dvjtjcj0qf0wm"]
+[gd_scene load_steps=29 format=3 uid="uid://dvjtjcj0qf0wm"]
 
 [ext_resource type="Script" uid="uid://ql841nkiwba3" path="res://scripts/Enemy.cs" id="1_md0e3"]
+[ext_resource type="PackedScene" uid="uid://d38artqus8uvo" path="res://scenes/enemy_fire_spell.tscn" id="2_j0cyh"]
 [ext_resource type="Shader" uid="uid://cb1t677hrp6j8" path="res://scripts/hit_flash.gdshader" id="2_wtq4b"]
 [ext_resource type="Script" uid="uid://d1mx3v7so2wjy" path="res://scripts/EnemyBehaviorTree/Composites/BTSelector.cs" id="3_ipns3"]
 [ext_resource type="Script" uid="uid://cvbsjx14kxxgs" path="res://scripts/HurtBox.cs" id="3_otmr2"]
@@ -89,10 +90,10 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
-radius = 9.0
+radius = 8.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4ra3w"]
-radius = 217.518
+radius = 282.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_5uy6h"]
 radius = 91.1976
@@ -103,6 +104,7 @@ radius = 91.1976
 base_max_speed = 50.0
 collision_layer = 0
 script = ExtResource("1_md0e3")
+Spell = ExtResource("2_j0cyh")
 
 [node name="EnemySprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1

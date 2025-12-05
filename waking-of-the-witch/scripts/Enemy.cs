@@ -19,9 +19,10 @@ public partial class Enemy : CharacterBody2D
 	// attack variables
 	[Export]
 	public PackedScene Spell;
-	private Area2D attackArea;
-	private double _attackCooldown = 0;
+	public Area2D attackArea;
+	public double attackCooldown = 0;
 	public bool CanAttack;
+	public bool isAttacking;
 
 	// detection variables
 	private Area2D detectionArea;
@@ -88,8 +89,8 @@ public partial class Enemy : CharacterBody2D
 			_behaviorTreeRoot.Tick(this, delta);
 
 		// Attack cooldown
-		if (_attackCooldown > 0)
-			_attackCooldown -= delta;
+		if (attackCooldown > 0)
+			attackCooldown -= delta;
 
 		// Update health
 		HealthRatio = (float)Call("get_health") / MaxHealth;
@@ -121,7 +122,7 @@ public partial class Enemy : CharacterBody2D
 	{   
 		GD.Print("ATTACK AREA DETECTED: ", body);
 		// if the body entering is a player
-		if (body is CharacterController p && _attackCooldown <= 0)
+		if (body is CharacterController p)
 		{
 			 CanAttack = true;
 		}
@@ -138,7 +139,7 @@ public partial class Enemy : CharacterBody2D
 		}
 	}
 
-		private void UpdateSprite() 
+	private void UpdateSprite() 
 	{
 		if (EnemySprite == null) return;
 		
@@ -159,7 +160,6 @@ public partial class Enemy : CharacterBody2D
 			EnemySprite.FlipH = false;
 		}
 	}
-
 	public void DoDamageEffects(bool bypass)
 	{
 		// if (CurrentHealth >= 20)

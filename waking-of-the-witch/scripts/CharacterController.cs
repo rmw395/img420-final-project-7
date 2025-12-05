@@ -360,7 +360,7 @@ public partial class CharacterController : CharacterBody2D
 		float currentHealth = (float)Call("get_health").As<double>();
 		if (currentHealth <= 0)
 		{
-			//GetParent<World>().EmitSignal("Death");
+			GetParent<World>().EmitSignal("Death");
 		}
 	}
 	

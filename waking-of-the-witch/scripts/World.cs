@@ -11,7 +11,8 @@ public partial class World : Node2D
 	
 	public float TimePassed;
 	//private PauseScreen _pauseScreen;
-	//private DeathScreen _deathScreen;
+	private DeathScreen _deathScreen;
+
 	//private VictoryScreen _victoryScreen;
 	//private List<Enemy> _requiredEnemies = [];
 	private CollisionShape2D _cameraBounds;
@@ -31,7 +32,7 @@ public partial class World : Node2D
 	{
 		TimePassed = 0.0f;
 		//_pauseScreen = GetNode<PauseScreen>("PauseScreen");
-		//_deathScreen = GetNode<DeathScreen>("DeathScreen");
+		_deathScreen = GetNode<DeathScreen>("DeathScreen");
 		//_victoryScreen = GetNode<VictoryScreen>("VictoryScreen");
 		
 		_player = GetNode<CharacterController>("Player");
@@ -50,7 +51,7 @@ public partial class World : Node2D
 		if (_interactionManager != null && HasNode("Player"))
 		{
 			//_interactionManager.Call("add_status_effect", GetNode("Player"), "fire");
-			GD.Print("Fire!");
+			//GD.Print("Fire!");
 		}
 	}
 	
@@ -67,7 +68,7 @@ public partial class World : Node2D
 			_waterApplied = true;
 			if (_interactionManager != null)
 			{
-				GD.Print("Gas!");
+				//GD.Print("Gas!");
 				//_interactionManager.Call("add_status_effect", GetNode("Player"), "gasoline");
 			}
 		}
@@ -87,10 +88,11 @@ public partial class World : Node2D
 		//}
 	}
 	
-	//private void OnDeath()
-	//{
-		//_deathScreen.Dead();
-	//}
+	private void OnDeath()
+	{
+		GD.Print("GameOver");
+		_deathScreen.Dead();
+	}
 	
 	//private void OnRemoveEnemy(Enemy givenEnemy)
 	//{

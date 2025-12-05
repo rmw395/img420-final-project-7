@@ -18,6 +18,8 @@ public partial class BTFlee : BTNode
         vel.X = dirX * enemy.Speed;
         enemy.Velocity = vel;
 
+        GD.Print("Enemy is Fleeing");
+
         return BTState.Running;
     }
 }
