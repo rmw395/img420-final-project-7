@@ -1,27 +1,92 @@
-[gd_scene load_steps=20 format=3 uid="uid://dvjtjcj0qf0wm"]
+[gd_scene load_steps=28 format=3 uid="uid://dvjtjcj0qf0wm"]
 
-[ext_resource type="Script" uid="uid://l5bhij6fnis3" path="res://scripts/Enemy.cs" id="1_md0e3"]
-[ext_resource type="Shader" uid="uid://vs0nl1335r0" path="res://scripts/hit_flash.gdshader" id="2_wtq4b"]
-[ext_resource type="Script" uid="uid://c573jp5tcakdp" path="res://scripts/EnemyBehaviorTree/Composites/BTSelector.cs" id="3_ipns3"]
-[ext_resource type="Script" uid="uid://bif76daxaxsgf" path="res://scripts/HurtBox.cs" id="3_otmr2"]
+[ext_resource type="Script" uid="uid://ql841nkiwba3" path="res://scripts/Enemy.cs" id="1_md0e3"]
+[ext_resource type="Shader" uid="uid://cb1t677hrp6j8" path="res://scripts/hit_flash.gdshader" id="2_wtq4b"]
+[ext_resource type="Script" uid="uid://d1mx3v7so2wjy" path="res://scripts/EnemyBehaviorTree/Composites/BTSelector.cs" id="3_ipns3"]
+[ext_resource type="Script" uid="uid://cvbsjx14kxxgs" path="res://scripts/HurtBox.cs" id="3_otmr2"]
 [ext_resource type="Texture2D" uid="uid://mtgt8a4t5wrp" path="res://sprites/enemy.png" id="3_wtq4b"]
-[ext_resource type="Script" uid="uid://ry8k4n5f1ixv" path="res://scripts/EnemyBehaviorTree/Composites/BTSequence.cs" id="4_8qclf"]
-[ext_resource type="Script" uid="uid://dtherw64ukcco" path="res://scripts/EnemyBehaviorTree/Conditions/BTIsHealthCritical.cs" id="5_w8i8w"]
-[ext_resource type="Script" uid="uid://c7movlrrf35da" path="res://scripts/EnemyBehaviorTree/Actions/BTFlee.cs" id="6_otmr2"]
-[ext_resource type="Script" uid="uid://doot16rpiilxp" path="res://scripts/EnemyBehaviorTree/Conditions/BTIsPlayerInRange.cs" id="7_wtq4b"]
-[ext_resource type="Script" uid="uid://cl4g7l1y6rckg" path="res://scripts/EnemyBehaviorTree/Conditions/BTCanAttack.cs" id="8_8qclf"]
-[ext_resource type="Script" uid="uid://2qoai7hbk4jg" path="res://scripts/EnemyBehaviorTree/Actions/BTAttack.cs" id="8_j0cyh"]
-[ext_resource type="Script" uid="uid://bvrcn21lv8vsh" path="res://scripts/EnemyBehaviorTree/Actions/BTChasePlayer.cs" id="9_g0wcc"]
-[ext_resource type="Script" uid="uid://cvhjqdo2tsiol" path="res://scripts/EnemyBehaviorTree/Actions/BTStandby.cs" id="11_w8i8w"]
+[ext_resource type="Script" uid="uid://dxs0b5p4exlij" path="res://scripts/EnemyBehaviorTree/Composites/BTSequence.cs" id="4_8qclf"]
+[ext_resource type="Script" uid="uid://6dvxbjhs4t5w" path="res://scripts/EnemyBehaviorTree/Conditions/BTIsHealthCritical.cs" id="5_w8i8w"]
+[ext_resource type="Script" uid="uid://chmnhlb76pqs5" path="res://scripts/EnemyBehaviorTree/Actions/BTFlee.cs" id="6_otmr2"]
+[ext_resource type="Script" uid="uid://cnwggxex2mcuy" path="res://scripts/EnemyBehaviorTree/Conditions/BTIsPlayerInRange.cs" id="7_wtq4b"]
+[ext_resource type="Script" uid="uid://cy11a2fyg5qra" path="res://scripts/EnemyBehaviorTree/Conditions/BTCanAttack.cs" id="8_8qclf"]
+[ext_resource type="Script" uid="uid://cp4rxte5y2pmk" path="res://scripts/EnemyBehaviorTree/Actions/BTAttack.cs" id="8_j0cyh"]
+[ext_resource type="Script" uid="uid://cylbgpxwavk8w" path="res://scripts/EnemyBehaviorTree/Actions/BTChasePlayer.cs" id="9_g0wcc"]
+[ext_resource type="Script" uid="uid://c2fvd2rbxcrv7" path="res://scripts/EnemyBehaviorTree/Actions/BTStandby.cs" id="11_w8i8w"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j0cyh"]
 shader = ExtResource("2_wtq4b")
 shader_parameter/opacity = 0.0
 shader_parameter/flash_color = Vector4(1, 1, 1, 1)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_j0cyh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtq4b"]
 atlas = ExtResource("3_wtq4b")
 region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_j0cyh"]
+atlas = ExtResource("3_wtq4b")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g0wcc"]
+atlas = ExtResource("3_wtq4b")
+region = Rect2(0, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s1ycm"]
+atlas = ExtResource("3_wtq4b")
+region = Rect2(16, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_shcg2"]
+atlas = ExtResource("3_wtq4b")
+region = Rect2(32, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ile5s"]
+atlas = ExtResource("3_wtq4b")
+region = Rect2(48, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1x4g4"]
+atlas = ExtResource("3_wtq4b")
+region = Rect2(64, 16, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2pwtc"]
+atlas = ExtResource("3_wtq4b")
+region = Rect2(80, 16, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rogs8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wtq4b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_j0cyh")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 2.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g0wcc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s1ycm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_shcg2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ile5s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1x4g4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2pwtc")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
 radius = 9.0
@@ -39,27 +104,34 @@ base_max_speed = 50.0
 collision_layer = 0
 script = ExtResource("1_md0e3")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="EnemySprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 material = SubResource("ShaderMaterial_j0cyh")
-texture = SubResource("AtlasTexture_j0cyh")
+sprite_frames = SubResource("SpriteFrames_rogs8")
+animation = &"walk"
+autoplay = "idle"
+frame_progress = 0.869901
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+show_behind_parent = true
 shape = SubResource("CircleShape2D_md0e3")
 
 [node name="DetectionArea" type="Area2D" parent="."]
+show_behind_parent = true
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
 shape = SubResource("CircleShape2D_4ra3w")
 
 [node name="AttackArea" type="Area2D" parent="."]
+show_behind_parent = true
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
 shape = SubResource("CircleShape2D_5uy6h")
 
 [node name="HurtBox" type="Area2D" parent="." groups=["enemy"]]
+show_behind_parent = true
 script = ExtResource("3_otmr2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]

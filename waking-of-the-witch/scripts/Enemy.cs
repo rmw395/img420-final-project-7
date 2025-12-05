@@ -6,6 +6,8 @@ public partial class Enemy : CharacterBody2D
 	// target variables
 	public CharacterController Player;
 
+	public AnimatedSprite2D EnemySprite;
+
 	// behavior tree variable
 	private BTNode _behaviorTreeRoot;
 
@@ -27,14 +29,17 @@ public partial class Enemy : CharacterBody2D
 	private ShaderMaterial _shaderMat;
 	private Timer _flashTimer;
 
+
 	public float Speed;
 
 	public override void _Ready()
 	{   
 		MaxHealth = (float)Call("get_max_health");
-		// _anim = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
-		// _anim.Play("idle");
-		_shaderMat = (ShaderMaterial)GetNode<Sprite2D>("Sprite2D").Material;
+
+		EnemySprite = GetNode<AnimatedSprite2D>("EnemySprite");
+		EnemySprite.Play("idle");
+
+		_shaderMat = (ShaderMaterial)GetNode<AnimatedSprite2D>("EnemySprite").Material;
 		_flashTimer = GetNode<Timer>("FlashTimer");
 			if (_shaderMat != null)
 				_shaderMat.SetShaderParameter("flash_color", new Vector4(1.0f, 0.3f, 0.2f, 1.0f));
@@ -76,6 +81,7 @@ public partial class Enemy : CharacterBody2D
 			velocity += GetGravity() * (float)delta;
 
 		Velocity = velocity;
+		UpdateSprite();
 
 		// Behavior tree updates Velocity.X
 		if (_behaviorTreeRoot != null)
@@ -129,6 +135,28 @@ public partial class Enemy : CharacterBody2D
 		if(body is CharacterController p)
 		{
 			CanAttack = false;
+		}
+	}
+
+		private void UpdateSprite() 
+	{
+		if (EnemySprite == null) return;
+		
+		else if (Velocity.X != 0)
+		{
+			EnemySprite.Play("walk");
+		}
+		else
+		{
+			EnemySprite.Play("idle");
+		}
+		if (Velocity.X < 0) 
+		{
+			EnemySprite.FlipH = true;
+		}
+		if (Velocity.X > 0) 
+		{
+			EnemySprite.FlipH = false;
 		}
 	}
 
