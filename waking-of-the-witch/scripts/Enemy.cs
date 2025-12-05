@@ -19,7 +19,7 @@ public partial class Enemy : CharacterBody2D
 	// attack variables
 	[Export]
 	public PackedScene Spell;
-	private Area2D attackArea;
+	public Area2D attackArea;
 	public double attackCooldown = 0;
 	public bool CanAttack;
 	public bool isAttacking;
