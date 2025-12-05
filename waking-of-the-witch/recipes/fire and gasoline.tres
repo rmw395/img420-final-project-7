@@ -1,0 +1,6 @@
+[gd_resource type="Recipe" format=3 uid="uid://dodmywmyiwcr2"]
+
+[resource]
+input_effects = Array[String](["fire", "gasoline"])
+consumed_effects = Array[bool]([true, true])
+output_effects = Array[String](["inferno"])

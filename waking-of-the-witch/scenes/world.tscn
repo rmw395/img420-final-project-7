@@ -1,24 +1,817 @@
-[gd_scene load_steps=4 format=3 uid="uid://cteom6ym18p1c"]
+[gd_scene load_steps=36 format=3 uid="uid://cteom6ym18p1c"]
 
-[ext_resource type="Script" uid="uid://0y6q3r4nqpu3" path="res://scripts/World.cs" id="1_nnsk1"]
+[ext_resource type="Script" uid="uid://byt7q8hjxhgik" path="res://scripts/World.cs" id="1_nnsk1"]
 [ext_resource type="PackedScene" uid="uid://dwcykkwe2b14t" path="res://scenes/player.tscn" id="2_rwgxs"]
+[ext_resource type="PackedScene" uid="uid://cpbfwtk7x5hy0" path="res://scenes/ash_particles.tscn" id="3_4wyf3"]
+[ext_resource type="PackedScene" uid="uid://dvjtjcj0qf0wm" path="res://scenes/enemy.tscn" id="4_k0juu"]
+[ext_resource type="PackedScene" uid="uid://brjibaicid761" path="res://scenes/tilemap.tscn" id="5_71j4m"]
+[ext_resource type="PackedScene" uid="uid://dbva1pm1roknj" path="res://scenes/death_screen.tscn" id="6_qfnet"]
+[ext_resource type="Shader" uid="uid://bj111k7h4vajq" path="res://scenes/fog.gdshader" id="5_i7141"]
+[ext_resource type="Texture2D" uid="uid://bv6d1u7ebqku7" path="res://assets/large_column_pieces.png" id="5_qfnet"]
+[ext_resource type="Texture2D" uid="uid://dfmg6s3f504hc" path="res://assets/background_decals.png" id="7_4mrxx"]
+[ext_resource type="Shader" uid="uid://uxx6vuetut0m" path="res://scripts/lava.gdshader" id="8_7r4gi"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rwgxs"]
-size = Vector2(2880, 64)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4mrxx"]
+shader = ExtResource("5_i7141")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_37qwj"]
+atlas = ExtResource("7_4mrxx")
+region = Rect2(256, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_munwf"]
+atlas = ExtResource("7_4mrxx")
+region = Rect2(0, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ts3gi"]
+atlas = ExtResource("7_4mrxx")
+region = Rect2(128, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0nbtd"]
+atlas = ExtResource("7_4mrxx")
+region = Rect2(512, 0, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lakw3"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pm21f"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2lf6f"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(-8, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7iits"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oo54l"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kpybi"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctatt"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(-8, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xgqkh"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i7141"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qfnet"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(160, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4mrxx"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(-8, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7r4gi"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w7kh3"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3hyu"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_q5onr"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(-8, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhx03"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o8fc1"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xo05s"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(192, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dss4m"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(-8, 0, 40, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7t5mc"]
+atlas = ExtResource("5_qfnet")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w7kh3"]
+shader = ExtResource("8_7r4gi")
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_nnsk1")
 
 [node name="Player" parent="." instance=ExtResource("2_rwgxs")]
+position = Vector2(24, 474)
+metadata/_edit_lock_ = true
 
-[node name="StatusEffect" type="StatusEffect" parent="Player"]
+[node name="GPUParticles2D" parent="Player" instance=ExtResource("3_4wyf3")]
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
+[node name="Enemy" parent="." instance=ExtResource("4_k0juu")]
+position = Vector2(1236, 237)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(32, 160)
-shape = SubResource("RectangleShape2D_rwgxs")
+[node name="Scenery" type="Node2D" parent="."]
 
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionShape2D"]
-position = Vector2(-32, -160)
-polygon = PackedVector2Array(-1408, 128, 1472, 128, 1472, 192, -1408, 192)
+[node name="Bottom Fog" type="CanvasLayer" parent="Scenery"]
+layer = -90
+
+[node name="ColorRect" type="ColorRect" parent="Scenery/Bottom Fog"]
+material = SubResource("ShaderMaterial_4mrxx")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.737255, 0.356863, 0, 0.74902)
+metadata/_edit_lock_ = true
+
+[node name="Background" type="CanvasLayer" parent="Scenery"]
+layer = -110
+
+[node name="ColorRect" type="ColorRect" parent="Scenery/Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 491.0
+offset_bottom = 142.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.51, 0.11968, 0.0918, 1)
+metadata/_edit_lock_ = true
+
+[node name="Cave Floor" type="CanvasLayer" parent="Scenery"]
+
+[node name="Far" type="ParallaxBackground" parent="Scenery"]
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="Scenery/Far"]
+motion_scale = Vector2(0.4, 0.4)
+
+[node name="Ceiling Decals" type="Node2D" parent="Scenery/Far/ParallaxLayer2"]
+position = Vector2(161, 361)
+rotation = 3.14159
+
+[node name="ColorRect" type="ColorRect" parent="Scenery/Far/ParallaxLayer2/Ceiling Decals"]
+offset_left = -735.0
+offset_top = 352.0
+offset_right = 1775.0
+offset_bottom = 697.0
+color = Color(0.148664, 0.047977, 0, 1)
+
+[node name="BackgroundDecal4" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Ceiling Decals"]
+position = Vector2(80, 326)
+scale = Vector2(1.02344, 1)
+texture = SubResource("AtlasTexture_37qwj")
+
+[node name="BackgroundDecal5" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Ceiling Decals"]
+position = Vector2(338, 310)
+scale = Vector2(3.47266, 1.65625)
+texture = SubResource("AtlasTexture_37qwj")
+
+[node name="BackgroundDecal" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Ceiling Decals"]
+position = Vector2(-17, 361)
+scale = Vector2(4.95313, 1.22656)
+texture = SubResource("AtlasTexture_munwf")
+
+[node name="BackgroundDecal2" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Ceiling Decals"]
+modulate = Color(0.408329, 0.408329, 0.408329, 1)
+position = Vector2(348, 345)
+scale = Vector2(4.21094, 1)
+texture = SubResource("AtlasTexture_ts3gi")
+
+[node name="BackgroundDecal6" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Ceiling Decals"]
+position = Vector2(243.998, 346.001)
+scale = Vector2(1.02344, 1)
+texture = SubResource("AtlasTexture_37qwj")
+
+[node name="BackgroundDecal7" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Ceiling Decals"]
+modulate = Color(0.370364, 0.370364, 0.370364, 1)
+position = Vector2(-26, 389)
+scale = Vector2(4.04883, 0.6875)
+texture = SubResource("AtlasTexture_ts3gi")
+
+[node name="BackgroundDecal3" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Ceiling Decals"]
+position = Vector2(-570.002, 407.997)
+scale = Vector2(7.44372, 2.58321)
+texture = SubResource("AtlasTexture_munwf")
+
+[node name="BackgroundDecal8" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Ceiling Decals"]
+modulate = Color(0.529067, 0.529067, 0.529067, 1)
+position = Vector2(-741.002, 366.997)
+scale = Vector2(4.95313, 1.22656)
+texture = SubResource("AtlasTexture_munwf")
+
+[node name="BackgroundDecal9" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Ceiling Decals"]
+position = Vector2(-787.002, 346.996)
+scale = Vector2(1.02344, 1)
+texture = SubResource("AtlasTexture_37qwj")
+
+[node name="Decals" type="Node2D" parent="Scenery/Far/ParallaxLayer2"]
+position = Vector2(35, -16)
+
+[node name="ColorRect" type="ColorRect" parent="Scenery/Far/ParallaxLayer2/Decals"]
+offset_left = -735.0
+offset_top = 352.0
+offset_right = 1775.0
+offset_bottom = 697.0
+color = Color(0.148664, 0.047977, 0, 1)
+
+[node name="BackgroundDecal4" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Decals"]
+position = Vector2(80, 326)
+scale = Vector2(1.02344, 1)
+texture = SubResource("AtlasTexture_37qwj")
+
+[node name="BackgroundDecal5" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Decals"]
+position = Vector2(338, 310)
+scale = Vector2(3.47266, 1.65625)
+texture = SubResource("AtlasTexture_37qwj")
+
+[node name="BackgroundDecal" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Decals"]
+position = Vector2(-17, 361)
+scale = Vector2(4.95313, 1.22656)
+texture = SubResource("AtlasTexture_munwf")
+
+[node name="BackgroundDecal2" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Decals"]
+modulate = Color(0.408329, 0.408329, 0.408329, 1)
+position = Vector2(348, 345)
+scale = Vector2(4.21094, 1)
+texture = SubResource("AtlasTexture_ts3gi")
+
+[node name="BackgroundDecal3" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Decals"]
+modulate = Color(0.707967, 0.707967, 0.707967, 1)
+position = Vector2(28, 336)
+texture = SubResource("AtlasTexture_0nbtd")
+
+[node name="BackgroundDecal6" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Decals"]
+position = Vector2(252, 337)
+scale = Vector2(1.02344, 1)
+texture = SubResource("AtlasTexture_37qwj")
+
+[node name="BackgroundDecal7" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Decals"]
+modulate = Color(0.370364, 0.370364, 0.370364, 1)
+position = Vector2(-26, 389)
+scale = Vector2(4.04883, 0.6875)
+texture = SubResource("AtlasTexture_ts3gi")
+
+[node name="BackgroundDecal8" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Decals"]
+position = Vector2(-76, 345)
+texture = SubResource("AtlasTexture_0nbtd")
+
+[node name="BackgroundDecal9" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Decals"]
+modulate = Color(0.813258, 0.813258, 0.813258, 1)
+position = Vector2(217, 328)
+scale = Vector2(1.64844, 1.20313)
+texture = SubResource("AtlasTexture_0nbtd")
+flip_h = true
+
+[node name="BackgroundDecal10" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Decals"]
+position = Vector2(725, 323)
+scale = Vector2(3.47266, 1.65625)
+texture = SubResource("AtlasTexture_37qwj")
+
+[node name="Columns" type="Node2D" parent="Scenery/Far/ParallaxLayer2"]
+position = Vector2(10, -2)
+
+[node name="LargeColumnPieces17" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Columns"]
+texture_filter = 1
+position = Vector2(291, 342)
+texture = SubResource("AtlasTexture_lakw3")
+
+[node name="LargeColumnPieces18" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Columns"]
+texture_filter = 1
+position = Vector2(292, 279)
+texture = SubResource("AtlasTexture_pm21f")
+
+[node name="LargeColumnPieces19" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Columns"]
+texture_filter = 1
+position = Vector2(286, 370)
+texture = SubResource("AtlasTexture_2lf6f")
+
+[node name="LargeColumnPieces20" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Columns"]
+texture_filter = 1
+position = Vector2(292, 310)
+texture = SubResource("AtlasTexture_7iits")
+
+[node name="LargeColumnPieces13" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Columns"]
+texture_filter = 1
+position = Vector2(166, 335)
+texture = SubResource("AtlasTexture_oo54l")
+
+[node name="LargeColumnPieces14" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Columns"]
+texture_filter = 1
+position = Vector2(167, 272)
+texture = SubResource("AtlasTexture_kpybi")
+
+[node name="LargeColumnPieces15" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Columns"]
+texture_filter = 1
+position = Vector2(161, 363)
+texture = SubResource("AtlasTexture_ctatt")
+
+[node name="LargeColumnPieces16" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Columns"]
+texture_filter = 1
+position = Vector2(167, 303)
+texture = SubResource("AtlasTexture_xgqkh")
+
+[node name="Hanging Columns" type="Node2D" parent="Scenery/Far/ParallaxLayer2"]
+position = Vector2(447, 362)
+rotation = -3.14159
+
+[node name="LargeColumnPieces17" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(291, 342)
+texture = SubResource("AtlasTexture_lakw3")
+
+[node name="LargeColumnPieces18" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(292, 279)
+texture = SubResource("AtlasTexture_pm21f")
+
+[node name="LargeColumnPieces19" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(286, 370)
+texture = SubResource("AtlasTexture_2lf6f")
+
+[node name="LargeColumnPieces20" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(292, 310)
+texture = SubResource("AtlasTexture_7iits")
+
+[node name="LargeColumnPieces13" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(166, 335)
+texture = SubResource("AtlasTexture_oo54l")
+
+[node name="LargeColumnPieces14" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(167, 272)
+texture = SubResource("AtlasTexture_kpybi")
+
+[node name="LargeColumnPieces15" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(161, 363)
+texture = SubResource("AtlasTexture_ctatt")
+
+[node name="LargeColumnPieces16" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(167, 303)
+texture = SubResource("AtlasTexture_xgqkh")
+
+[node name="LargeColumnPieces21" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(8.00125, 361)
+texture = SubResource("AtlasTexture_lakw3")
+
+[node name="LargeColumnPieces22" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(9.00125, 298)
+texture = SubResource("AtlasTexture_pm21f")
+
+[node name="LargeColumnPieces23" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(3.00125, 389)
+texture = SubResource("AtlasTexture_2lf6f")
+
+[node name="LargeColumnPieces24" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(9.00125, 329)
+texture = SubResource("AtlasTexture_7iits")
+
+[node name="LargeColumnPieces25" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-116.999, 354)
+texture = SubResource("AtlasTexture_oo54l")
+
+[node name="LargeColumnPieces26" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-115.999, 291)
+texture = SubResource("AtlasTexture_kpybi")
+
+[node name="LargeColumnPieces27" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-121.999, 382)
+texture = SubResource("AtlasTexture_ctatt")
+
+[node name="LargeColumnPieces28" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-115.999, 322)
+texture = SubResource("AtlasTexture_xgqkh")
+
+[node name="LargeColumnPieces29" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-270.999, 345.001)
+texture = SubResource("AtlasTexture_lakw3")
+
+[node name="LargeColumnPieces30" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-269.999, 282.001)
+texture = SubResource("AtlasTexture_pm21f")
+
+[node name="LargeColumnPieces31" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-275.999, 373.001)
+texture = SubResource("AtlasTexture_2lf6f")
+
+[node name="LargeColumnPieces32" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-269.999, 313.001)
+texture = SubResource("AtlasTexture_7iits")
+
+[node name="LargeColumnPieces33" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-395.999, 338.001)
+texture = SubResource("AtlasTexture_oo54l")
+
+[node name="LargeColumnPieces34" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-394.999, 275.001)
+texture = SubResource("AtlasTexture_kpybi")
+
+[node name="LargeColumnPieces35" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-400.999, 366.001)
+texture = SubResource("AtlasTexture_ctatt")
+
+[node name="LargeColumnPieces36" type="Sprite2D" parent="Scenery/Far/ParallaxLayer2/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-394.999, 306.001)
+texture = SubResource("AtlasTexture_xgqkh")
+
+[node name="Far Fog" type="CanvasLayer" parent="Scenery"]
+layer = -100
+
+[node name="ColorRect" type="ColorRect" parent="Scenery/Far Fog"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.133333, 0.133333, 0.133333, 0.466667)
+metadata/_edit_lock_ = true
+
+[node name="Close" type="ParallaxBackground" parent="Scenery"]
+layer = -98
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Scenery/Close"]
+motion_scale = Vector2(0.5, 0.5)
+
+[node name="Ceiling Decals" type="Node2D" parent="Scenery/Close/ParallaxLayer"]
+position = Vector2(240, 312)
+rotation = 3.14159
+
+[node name="ColorRect" type="ColorRect" parent="Scenery/Close/ParallaxLayer/Ceiling Decals"]
+offset_left = -735.0
+offset_top = 352.0
+offset_right = 1775.0
+offset_bottom = 697.0
+color = Color(0.210864, 0.0794266, 0, 1)
+
+[node name="BackgroundDecal4" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Ceiling Decals"]
+position = Vector2(143, 347)
+scale = Vector2(1.02344, 1)
+texture = SubResource("AtlasTexture_37qwj")
+
+[node name="BackgroundDecal5" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Ceiling Decals"]
+position = Vector2(338, 310)
+scale = Vector2(3.47266, 1.65625)
+texture = SubResource("AtlasTexture_37qwj")
+
+[node name="BackgroundDecal" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Ceiling Decals"]
+position = Vector2(-174.41, 371.999)
+scale = Vector2(6.88424, 1.22656)
+texture = SubResource("AtlasTexture_munwf")
+
+[node name="BackgroundDecal2" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Ceiling Decals"]
+modulate = Color(0.408329, 0.408329, 0.408329, 1)
+position = Vector2(348, 345)
+scale = Vector2(4.21094, 1)
+texture = SubResource("AtlasTexture_ts3gi")
+
+[node name="BackgroundDecal6" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Ceiling Decals"]
+position = Vector2(252, 337)
+scale = Vector2(1.02344, 1)
+texture = SubResource("AtlasTexture_37qwj")
+
+[node name="BackgroundDecal7" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Ceiling Decals"]
+modulate = Color(0.370364, 0.370364, 0.370364, 1)
+position = Vector2(-26, 389)
+scale = Vector2(4.04883, 0.6875)
+texture = SubResource("AtlasTexture_ts3gi")
+
+[node name="BackgroundDecal9" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Ceiling Decals"]
+modulate = Color(0.370364, 0.370364, 0.370364, 1)
+position = Vector2(-472.002, 397.998)
+scale = Vector2(5.52048, 1.56959)
+texture = SubResource("AtlasTexture_ts3gi")
+
+[node name="BackgroundDecal8" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Ceiling Decals"]
+modulate = Color(0.370364, 0.370364, 0.370364, 1)
+position = Vector2(-26, 389)
+scale = Vector2(4.04883, 0.6875)
+texture = SubResource("AtlasTexture_ts3gi")
+
+[node name="BackgroundDecal3" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Ceiling Decals"]
+position = Vector2(-539.002, 377.998)
+scale = Vector2(4.69531, 1.55469)
+texture = SubResource("AtlasTexture_munwf")
+
+[node name="Decals" type="Node2D" parent="Scenery/Close/ParallaxLayer"]
+position = Vector2(-3, 24)
+
+[node name="ColorRect" type="ColorRect" parent="Scenery/Close/ParallaxLayer/Decals"]
+offset_left = -735.0
+offset_top = 352.0
+offset_right = 1775.0
+offset_bottom = 697.0
+color = Color(0.210864, 0.0794266, 0, 1)
+
+[node name="BackgroundDecal4" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Decals"]
+position = Vector2(143, 347)
+scale = Vector2(1.02344, 1)
+texture = SubResource("AtlasTexture_37qwj")
+
+[node name="BackgroundDecal5" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Decals"]
+position = Vector2(338, 310)
+scale = Vector2(3.47266, 1.65625)
+texture = SubResource("AtlasTexture_37qwj")
+
+[node name="BackgroundDecal" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Decals"]
+position = Vector2(-17, 361)
+scale = Vector2(4.95313, 1.22656)
+texture = SubResource("AtlasTexture_munwf")
+
+[node name="BackgroundDecal2" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Decals"]
+modulate = Color(0.408329, 0.408329, 0.408329, 1)
+position = Vector2(348, 345)
+scale = Vector2(4.21094, 1)
+texture = SubResource("AtlasTexture_ts3gi")
+
+[node name="BackgroundDecal3" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Decals"]
+modulate = Color(0.707967, 0.707967, 0.707967, 1)
+position = Vector2(22, 346)
+texture = SubResource("AtlasTexture_0nbtd")
+
+[node name="BackgroundDecal6" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Decals"]
+position = Vector2(252, 337)
+scale = Vector2(1.02344, 1)
+texture = SubResource("AtlasTexture_37qwj")
+
+[node name="BackgroundDecal10" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Decals"]
+modulate = Color(0.54099, 0.54099, 0.54099, 1)
+position = Vector2(278, 354)
+scale = Vector2(2.34402, 1.19531)
+texture = SubResource("AtlasTexture_37qwj")
+
+[node name="BackgroundDecal7" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Decals"]
+modulate = Color(0.370364, 0.370364, 0.370364, 1)
+position = Vector2(-26, 389)
+scale = Vector2(4.04883, 0.6875)
+texture = SubResource("AtlasTexture_ts3gi")
+
+[node name="BackgroundDecal8" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Decals"]
+position = Vector2(261, 354)
+texture = SubResource("AtlasTexture_0nbtd")
+
+[node name="BackgroundDecal9" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Decals"]
+modulate = Color(0.813258, 0.813258, 0.813258, 1)
+position = Vector2(-152, 342)
+scale = Vector2(1.64844, 1.20313)
+texture = SubResource("AtlasTexture_0nbtd")
+flip_h = true
+
+[node name="Columns" type="Node2D" parent="Scenery/Close/ParallaxLayer"]
+position = Vector2(0, 31)
+
+[node name="LargeColumnPieces" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Columns"]
+texture_filter = 1
+position = Vector2(112, 344)
+texture = SubResource("AtlasTexture_i7141")
+
+[node name="LargeColumnPieces3" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Columns"]
+texture_filter = 1
+position = Vector2(113, 281)
+texture = SubResource("AtlasTexture_qfnet")
+
+[node name="LargeColumnPieces2" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Columns"]
+texture_filter = 1
+position = Vector2(107, 372)
+texture = SubResource("AtlasTexture_4mrxx")
+
+[node name="LargeColumnPieces4" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Columns"]
+texture_filter = 1
+position = Vector2(113, 312)
+texture = SubResource("AtlasTexture_7r4gi")
+
+[node name="LargeColumnPieces5" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Columns"]
+texture_filter = 1
+position = Vector2(219, 377)
+texture = SubResource("AtlasTexture_w7kh3")
+
+[node name="LargeColumnPieces6" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Columns"]
+texture_filter = 1
+position = Vector2(220, 314)
+texture = SubResource("AtlasTexture_e3hyu")
+
+[node name="LargeColumnPieces7" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Columns"]
+texture_filter = 1
+position = Vector2(214, 405)
+texture = SubResource("AtlasTexture_q5onr")
+
+[node name="LargeColumnPieces8" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Columns"]
+texture_filter = 1
+position = Vector2(220, 345)
+texture = SubResource("AtlasTexture_jhx03")
+
+[node name="LargeColumnPieces9" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Columns"]
+texture_filter = 1
+position = Vector2(341, 398)
+texture = SubResource("AtlasTexture_o8fc1")
+
+[node name="LargeColumnPieces10" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Columns"]
+texture_filter = 1
+position = Vector2(342, 335)
+texture = SubResource("AtlasTexture_xo05s")
+
+[node name="LargeColumnPieces11" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Columns"]
+texture_filter = 1
+position = Vector2(336, 426)
+texture = SubResource("AtlasTexture_dss4m")
+
+[node name="LargeColumnPieces12" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Columns"]
+texture_filter = 1
+position = Vector2(342, 366)
+texture = SubResource("AtlasTexture_7t5mc")
+
+[node name="Hanging Columns" type="Node2D" parent="Scenery/Close/ParallaxLayer"]
+position = Vector2(449, 358)
+rotation = 3.14159
+
+[node name="LargeColumnPieces" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(87.9984, 375)
+texture = SubResource("AtlasTexture_i7141")
+
+[node name="LargeColumnPieces3" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(88.9984, 312)
+texture = SubResource("AtlasTexture_qfnet")
+
+[node name="LargeColumnPieces2" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(82.9984, 403)
+texture = SubResource("AtlasTexture_4mrxx")
+
+[node name="LargeColumnPieces4" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(88.9984, 343)
+texture = SubResource("AtlasTexture_7r4gi")
+
+[node name="LargeColumnPieces5" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(219, 377)
+texture = SubResource("AtlasTexture_w7kh3")
+
+[node name="LargeColumnPieces6" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(220, 314)
+texture = SubResource("AtlasTexture_e3hyu")
+
+[node name="LargeColumnPieces7" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(214, 405)
+texture = SubResource("AtlasTexture_q5onr")
+
+[node name="LargeColumnPieces8" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(220, 345)
+texture = SubResource("AtlasTexture_jhx03")
+
+[node name="LargeColumnPieces9" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(341, 398)
+texture = SubResource("AtlasTexture_o8fc1")
+
+[node name="LargeColumnPieces10" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(342, 335)
+texture = SubResource("AtlasTexture_xo05s")
+
+[node name="LargeColumnPieces11" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(336, 426)
+texture = SubResource("AtlasTexture_dss4m")
+
+[node name="LargeColumnPieces12" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(342, 366)
+texture = SubResource("AtlasTexture_7t5mc")
+
+[node name="LargeColumnPieces13" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-323.001, 351.998)
+texture = SubResource("AtlasTexture_i7141")
+
+[node name="LargeColumnPieces14" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-322.001, 288.998)
+texture = SubResource("AtlasTexture_qfnet")
+
+[node name="LargeColumnPieces15" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-328.001, 379.998)
+texture = SubResource("AtlasTexture_4mrxx")
+
+[node name="LargeColumnPieces16" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-322.001, 319.998)
+texture = SubResource("AtlasTexture_7r4gi")
+
+[node name="LargeColumnPieces17" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-198.002, 361)
+texture = SubResource("AtlasTexture_w7kh3")
+
+[node name="LargeColumnPieces18" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-197.002, 298)
+texture = SubResource("AtlasTexture_e3hyu")
+
+[node name="LargeColumnPieces19" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-203.002, 389)
+texture = SubResource("AtlasTexture_q5onr")
+
+[node name="LargeColumnPieces20" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-197.002, 329)
+texture = SubResource("AtlasTexture_jhx03")
+
+[node name="LargeColumnPieces21" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-76.0016, 382)
+texture = SubResource("AtlasTexture_o8fc1")
+
+[node name="LargeColumnPieces22" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-75.0016, 319)
+texture = SubResource("AtlasTexture_xo05s")
+
+[node name="LargeColumnPieces23" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-81.0016, 410)
+texture = SubResource("AtlasTexture_dss4m")
+
+[node name="LargeColumnPieces24" type="Sprite2D" parent="Scenery/Close/ParallaxLayer/Hanging Columns"]
+texture_filter = 1
+position = Vector2(-75.0016, 350)
+texture = SubResource("AtlasTexture_7t5mc")
+
+[node name="Back" type="ParallaxBackground" parent="."]
+layer = -105
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Back"]
+motion_scale = Vector2(0.1, 0.1)
+
+[node name="ColorRect" type="ColorRect" parent="Back/ParallaxLayer"]
+material = SubResource("ShaderMaterial_w7kh3")
+offset_left = 222.0
+offset_top = -147.0
+offset_right = 243.0
+offset_bottom = 484.0
+color = Color(1, 0.584314, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="Back/ParallaxLayer"]
+material = SubResource("ShaderMaterial_w7kh3")
+offset_left = 453.0
+offset_top = -152.0
+offset_right = 474.0
+offset_bottom = 479.0
+color = Color(1, 0.631813, 0.250271, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="Back/ParallaxLayer"]
+material = SubResource("ShaderMaterial_w7kh3")
+offset_left = 38.0
+offset_top = -131.0
+offset_right = 59.0
+offset_bottom = 500.0
+color = Color(1, 0.635294, 0, 1)
+
+[node name="TileSet" parent="." instance=ExtResource("5_71j4m")]
+
+[node name="DeathScreen" parent="." instance=ExtResource("6_qfnet")]
+visible = false
+
+[connection signal="Death" from="." to="." method="OnDeath"]

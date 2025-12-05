@@ -1,50 +1,151 @@
-[gd_scene load_steps=7 format=3 uid="uid://dwcykkwe2b14t"]
+[gd_scene load_steps=24 format=3 uid="uid://dwcykkwe2b14t"]
 
-[ext_resource type="Script" uid="uid://5ux3dbatbvlt" path="res://scripts/CharacterController.cs" id="1_3vyb7"]
-[ext_resource type="Texture2D" uid="uid://18x5852swo2u" path="res://icon.svg" id="2_g2els"]
-[ext_resource type="Shader" uid="uid://dsa8ry3a0p8kt" path="res://scripts/hit_flash.gdshader" id="2_qhqgy"]
+[ext_resource type="Script" uid="uid://ncctgjb4p15u" path="res://scripts/CharacterController.cs" id="1_3vyb7"]
+[ext_resource type="Texture2D" uid="uid://jnf8ttj0x2bx" path="res://sprites/Player.png" id="2_g2els"]
+[ext_resource type="PackedScene" uid="uid://k82a7gsr" path="res://scenes/water_spell.tscn" id="2_tuyoq"]
+[ext_resource type="PackedScene" uid="uid://btvdl6nww3lx2" path="res://scenes/fire_spell.tscn" id="3_fjrip"]
+[ext_resource type="Shader" path="res://scripts/hit_flash.gdshader" id="3_tuyoq"]
+[ext_resource type="Script" uid="uid://cj2wdvsum4ujj" path="res://scripts/HurtBox.cs" id="4_dqkch"]
+[ext_resource type="Script" uid="uid://cfl42iiqlj31e" path="res://scripts/Vignette.cs" id="4_qlg0r"]
+[ext_resource type="Shader" uid="uid://nfs2q4gx8vvl" path="res://scripts/vignette.gdshader" id="5_tuyoq"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dqkch"]
-shader = ExtResource("2_qhqgy")
+[sub_resource type="CircleShape2D" id="CircleShape2D_tuyoq"]
+radius = 7.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fjrip"]
+shader = ExtResource("3_tuyoq")
 shader_parameter/opacity = 0.0
 shader_parameter/flash_color = Vector4(1, 1, 1, 1)
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_qhqgy"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
+atlas = ExtResource("2_g2els")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_smehm"]
+atlas = ExtResource("2_g2els")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ur7pv"]
+atlas = ExtResource("2_g2els")
+region = Rect2(0, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4r1p"]
+atlas = ExtResource("2_g2els")
+region = Rect2(16, 32, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2wvv"]
+atlas = ExtResource("2_g2els")
+region = Rect2(0, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3v2ag"]
+atlas = ExtResource("2_g2els")
+region = Rect2(16, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jej6c"]
+atlas = ExtResource("2_g2els")
+region = Rect2(32, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_f1ej7"]
+atlas = ExtResource("2_g2els")
+region = Rect2(48, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oprun"]
+atlas = ExtResource("2_g2els")
+region = Rect2(64, 48, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_a8ls1"]
+atlas = ExtResource("2_g2els")
+region = Rect2(80, 48, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fjrip"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_g2els")
+"texture": SubResource("AtlasTexture_fjrip")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_smehm")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ur7pv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4r1p")
 }],
 "loop": false,
-"name": &"default",
+"name": &"jump",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d2wvv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3v2ag")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jej6c")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_f1ej7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oprun")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_a8ls1")
+}],
+"loop": true,
+"name": &"run",
+"speed": 7.0
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_qhqgy"]
-radius = 12.0
-height = 24.0
+radius = 8.0
+height = 16.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tuyoq"]
+shader = ExtResource("5_tuyoq")
+shader_parameter/centerPosition = Vector2(0.5, 0.5)
 
 [node name="Player" type="Entity"]
 base_acceleration = 3000.0
 base_ground_friction = 1800.0
 base_air_friction = 900.0
+collision_layer = 2
 script = ExtResource("1_3vyb7")
-DashSpeed = 1000.0
+DashSpeed = 600.0
 AirAccelerationMult = 0.5
-JumpSpeed = 400.0
-BurstJumpSpeed = 1000.0
+JumpSpeed = 200.0
+BurstJumpSpeed = 400.0
 Gravity = 1200.0
 SlowFallMult = 0.7
+SpellScenes = Array[PackedScene]([ExtResource("2_tuyoq"), ExtResource("3_fjrip")])
+
+[node name="HurtBox" type="Area2D" parent="." groups=["player"]]
+script = ExtResource("4_dqkch")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+shape = SubResource("CircleShape2D_tuyoq")
 
 [node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -32)
+zoom = Vector2(2, 2)
 process_callback = 0
 position_smoothing_enabled = true
-position_smoothing_speed = 10.0
+position_smoothing_speed = 20.0
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
-material = SubResource("ShaderMaterial_dqkch")
-scale = Vector2(0.2, 0.2)
-sprite_frames = SubResource("SpriteFrames_qhqgy")
+texture_filter = 1
+material = SubResource("ShaderMaterial_fjrip")
+sprite_frames = SubResource("SpriteFrames_fjrip")
+animation = &"idle"
+autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_qhqgy")
@@ -75,5 +176,19 @@ one_shot = true
 [node name="AttackCooldown" type="Timer" parent="."]
 one_shot = true
 
-[connection signal="damage" from="." to="." method="OnDamage"]
+[node name="Vignette" type="CanvasLayer" parent="."]
+script = ExtResource("4_qlg0r")
+
+[node name="ColorRect" type="ColorRect" parent="Vignette"]
+material = SubResource("ShaderMaterial_tuyoq")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[connection signal="do_damage_effects" from="." to="." method="OnDamageEffects"]
+[connection signal="Damage" from="HurtBox" to="HurtBox" method="OnDamage"]
+[connection signal="timeout" from="InvulnerabilityTimer" to="." method="OnInvunerabilityTimeout"]
 [connection signal="timeout" from="DashTimer" to="." method="OnDashTimeout"]

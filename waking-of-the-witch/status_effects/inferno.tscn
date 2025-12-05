@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://chgxdmhcgodm6"]
+
+[node name="inferno" type="StatusEffect"]
+id = "inferno"
+duration = 10.0
+health_change = -1.0
+health_change_interval = 0.2
+bypass_invulnerability = true

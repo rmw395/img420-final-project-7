@@ -1,0 +1,25 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpbfwtk7x5hy0"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_40yvg"]
+particle_flag_disable_z = true
+emission_shape_offset = Vector3(0, -270, 0)
+emission_shape = 3
+emission_box_extents = Vector3(960, 270, 1)
+direction = Vector3(1, 0.5, 0)
+initial_velocity_min = 10.0
+initial_velocity_max = 30.0
+angular_velocity_min = 100.0
+angular_velocity_max = 200.0
+gravity = Vector3(0, 10, 0)
+scale_min = 1.2
+scale_max = 2.0
+color = Color(0.19, 0.1349, 0.1349, 1)
+hue_variation_min = -0.1
+hue_variation_max = 0.1
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+amount = 300
+lifetime = 15.0
+preprocess = 5.0
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_40yvg")
