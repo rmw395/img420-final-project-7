@@ -9,7 +9,7 @@ public partial class BTStandby : BTNode
 		vel.X = 0;
 		enemy.Velocity = vel;
 
-		GD.Print("Enemy is on standby!");
+		//GD.Print("Enemy is on standby!");
 
 		return BTState.Success;
 	}

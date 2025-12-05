@@ -50,7 +50,7 @@ public partial class World : Node2D
 		if (_interactionManager != null && HasNode("Player"))
 		{
 			//_interactionManager.Call("add_status_effect", GetNode("Player"), "fire");
-			GD.Print("Fire!");
+			//GD.Print("Fire!");
 		}
 	}
 	
@@ -67,7 +67,7 @@ public partial class World : Node2D
 			_waterApplied = true;
 			if (_interactionManager != null)
 			{
-				GD.Print("Gas!");
+				//GD.Print("Gas!");
 				//_interactionManager.Call("add_status_effect", GetNode("Player"), "gasoline");
 			}
 		}
@@ -87,10 +87,11 @@ public partial class World : Node2D
 		//}
 	}
 	
-	//private void OnDeath()
-	//{
+	private void OnDeath()
+	{
+		GD.Print("GameOver");
 		//_deathScreen.Dead();
-	//}
+	}
 	
 	//private void OnRemoveEnemy(Enemy givenEnemy)
 	//{

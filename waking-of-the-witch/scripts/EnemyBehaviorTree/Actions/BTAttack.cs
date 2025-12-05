@@ -8,8 +8,10 @@ public partial class BTAttack : BTNode
 		if (!enemy.CanAttack || enemy.Player == null || !GodotObject.IsInstanceValid(enemy.Player))
 			return BTState.Failure;
 
-		// Stop enemy movement during attack
-		enemy.Velocity = new Vector2(0, enemy.Velocity.Y);
+		// hault movement 
+		Vector2 vel = enemy.Velocity; 
+		vel.X = 0; 
+		enemy.Velocity = vel;
 
 		// Compute direction to player (NORMALIZED)
 		Vector2 direction = (enemy.Player.GlobalPosition - enemy.GlobalPosition).Normalized();
@@ -31,6 +33,4 @@ public partial class BTAttack : BTNode
 
 		return BTState.Success;
 	}
-
-
 }

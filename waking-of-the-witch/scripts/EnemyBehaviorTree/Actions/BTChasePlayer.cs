@@ -18,7 +18,7 @@ public partial class BTChasePlayer : BTNode
 		vel.X = dirX * enemy.Speed;
 		enemy.Velocity = vel;
 
-		GD.Print($"Enemy chases at speed: {enemy.Speed}, velX: {enemy.Velocity.X}");
+		//GD.Print($"Enemy chases at speed: {enemy.Speed}, velX: {enemy.Velocity.X}");
 
 		return BTState.Success;
 	}

@@ -10,7 +10,7 @@
 script = ExtResource("1_nnsk1")
 
 [node name="Player" parent="." instance=ExtResource("2_rwgxs")]
-position = Vector2(24, 474)
+position = Vector2(583, 180)
 
 [node name="GPUParticles2D" parent="Player" instance=ExtResource("3_4wyf3")]
 
@@ -33,3 +33,5 @@ grow_vertical = 2
 color = Color(0.51, 0.11968, 0.0918, 1)
 
 [node name="TileSet" parent="." instance=ExtResource("5_71j4m")]
+
+[connection signal="Death" from="." to="." method="OnDeath"]

@@ -22,6 +22,7 @@ public partial class Enemy : CharacterBody2D
 	private Area2D attackArea;
 	public double attackCooldown = 0;
 	public bool CanAttack;
+	public bool isAttacking;
 
 	// detection variables
 	private Area2D detectionArea;
@@ -121,7 +122,7 @@ public partial class Enemy : CharacterBody2D
 	{   
 		GD.Print("ATTACK AREA DETECTED: ", body);
 		// if the body entering is a player
-		if (body is CharacterController p && attackCooldown <= 0)
+		if (body is CharacterController p)
 		{
 			 CanAttack = true;
 		}

@@ -5,7 +5,7 @@ public partial class BTCanAttack : BTNode
     public override BTState Tick(Enemy enemy, double delta)
 	{
 		// double checks player is in range
-		if (enemy.Player == null || !GodotObject.IsInstanceValid(enemy.Player))
+		if (enemy.Player == null || !GodotObject.IsInstanceValid(enemy.Player) || enemy.attackCooldown > 0)
 			return BTState.Failure;
 
 		// checks attack cooldown
