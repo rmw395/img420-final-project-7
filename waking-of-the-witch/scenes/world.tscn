@@ -4,29 +4,18 @@
 [ext_resource type="PackedScene" uid="uid://dwcykkwe2b14t" path="res://scenes/player.tscn" id="2_rwgxs"]
 [ext_resource type="PackedScene" uid="uid://cpbfwtk7x5hy0" path="res://scenes/ash_particles.tscn" id="3_4wyf3"]
 [ext_resource type="PackedScene" uid="uid://dvjtjcj0qf0wm" path="res://scenes/enemy.tscn" id="4_k0juu"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rwgxs"]
-size = Vector2(2880, 64)
+[ext_resource type="PackedScene" uid="uid://brjibaicid761" path="res://scenes/tilemap.tscn" id="5_71j4m"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_nnsk1")
 
 [node name="Player" parent="." instance=ExtResource("2_rwgxs")]
+position = Vector2(24, 474)
 
 [node name="GPUParticles2D" parent="Player" instance=ExtResource("3_4wyf3")]
 
 [node name="Enemy" parent="." instance=ExtResource("4_k0juu")]
-position = Vector2(292, 10)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(32, 160)
-shape = SubResource("RectangleShape2D_rwgxs")
-
-[node name="Polygon2D" type="Polygon2D" parent="StaticBody2D/CollisionShape2D"]
-position = Vector2(-32, -160)
-polygon = PackedVector2Array(-1408, 128, 1472, 128, 1472, 192, -1408, 192)
+position = Vector2(1236, 237)
 
 [node name="Scenery" type="Node2D" parent="."]
 
@@ -37,6 +26,10 @@ layer = -10
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 491.0
+offset_bottom = 142.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.51, 0.11968, 0.0918, 1)
+
+[node name="TileSet" parent="." instance=ExtResource("5_71j4m")]
