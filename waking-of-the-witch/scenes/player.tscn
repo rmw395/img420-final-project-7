@@ -1,12 +1,12 @@
 [gd_scene load_steps=22 format=3 uid="uid://dwcykkwe2b14t"]
 
-[ext_resource type="Script" uid="uid://e2oya8l15l1i" path="res://scripts/CharacterController.cs" id="1_3vyb7"]
+[ext_resource type="Script" uid="uid://bxmnfjmg83w5l" path="res://scripts/CharacterController.cs" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://jnf8ttj0x2bx" path="res://sprites/Player.png" id="2_g2els"]
 [ext_resource type="PackedScene" uid="uid://k82a7gsr" path="res://scenes/water_spell.tscn" id="2_tuyoq"]
 [ext_resource type="PackedScene" uid="uid://btvdl6nww3lx2" path="res://scenes/fire_spell.tscn" id="3_fjrip"]
-[ext_resource type="Script" uid="uid://bif76daxaxsgf" path="res://scripts/HurtBox.cs" id="4_dqkch"]
-[ext_resource type="Script" uid="uid://e4i54ut4vws" path="res://scripts/Vignette.cs" id="4_qlg0r"]
-[ext_resource type="Shader" path="res://scripts/vignette.gdshader" id="5_tuyoq"]
+[ext_resource type="Script" uid="uid://cvbsjx14kxxgs" path="res://scripts/HurtBox.cs" id="4_dqkch"]
+[ext_resource type="Script" uid="uid://bhnml7k15do7l" path="res://scripts/Vignette.cs" id="4_qlg0r"]
+[ext_resource type="Shader" uid="uid://cu0740e5f361o" path="res://scripts/vignette.gdshader" id="5_tuyoq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tuyoq"]
 radius = 7.0
