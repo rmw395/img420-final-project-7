@@ -13,8 +13,12 @@ public partial class BTAttack : BTNode
 		vel.X = 0; 
 		enemy.Velocity = vel;
 
-		// Compute direction to player (NORMALIZED)
+		// Compute direction to player
 		Vector2 direction = (enemy.Player.GlobalPosition - enemy.GlobalPosition).Normalized();
+
+		// Add upward tilt
+		Vector2 upwardTilt = new Vector2(0, -0.1f);
+		direction = (direction + upwardTilt).Normalized();
 
 		// Spawn projectile at enemy position + a small offset toward the player
 		Spell newSpell = enemy.Spell.Instantiate<Spell>();

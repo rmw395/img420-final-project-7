@@ -25,11 +25,12 @@ public partial class Spell : RigidBody2D
 		QueueFree();
 	}
 	
-	private void OnCollision(Node body) {
-		StaticBody2D wall = body as StaticBody2D;
-		if (wall != null) {
-			GD.Print("Hit Wall!");
-			QueueFree();
-		}
-	}
+	private void OnCollision(Node body) 
+	{
+        if (body is StaticBody2D || body is TileMapLayer) 
+		{
+            GD.Print("Hit Wall!");
+            QueueFree();
+        }
+    }
 }
