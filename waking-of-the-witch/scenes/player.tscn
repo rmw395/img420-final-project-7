@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://dwcykkwe2b14t"]
+[gd_scene load_steps=24 format=3 uid="uid://dwcykkwe2b14t"]
 
 [ext_resource type="Script" uid="uid://bxmnfjmg83w5l" path="res://scripts/CharacterController.cs" id="1_3vyb7"]
 [ext_resource type="Texture2D" uid="uid://jnf8ttj0x2bx" path="res://sprites/Player.png" id="2_g2els"]
@@ -6,10 +6,16 @@
 [ext_resource type="PackedScene" uid="uid://btvdl6nww3lx2" path="res://scenes/fire_spell.tscn" id="3_fjrip"]
 [ext_resource type="Script" uid="uid://cvbsjx14kxxgs" path="res://scripts/HurtBox.cs" id="4_dqkch"]
 [ext_resource type="Script" uid="uid://bhnml7k15do7l" path="res://scripts/Vignette.cs" id="4_qlg0r"]
+[ext_resource type="Shader" uid="uid://cb1t677hrp6j8" path="res://scripts/hit_flash.gdshader" id="5_smehm"]
 [ext_resource type="Shader" uid="uid://cu0740e5f361o" path="res://scripts/vignette.gdshader" id="5_tuyoq"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_tuyoq"]
 radius = 7.0
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fjrip"]
+shader = ExtResource("5_smehm")
+shader_parameter/opacity = 0.0
+shader_parameter/flash_color = Vector4(1, 1, 1, 1)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fjrip"]
 atlas = ExtResource("2_g2els")
@@ -136,6 +142,7 @@ position_smoothing_speed = 20.0
 
 [node name="PlayerSprite" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+material = SubResource("ShaderMaterial_fjrip")
 sprite_frames = SubResource("SpriteFrames_fjrip")
 animation = &"idle"
 autoplay = "idle"
